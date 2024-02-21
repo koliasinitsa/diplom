@@ -1,0 +1,17 @@
+{
+  "hello": "sadasdasd",
+  "world": "Worldasdsadsad",
+  "greeting": "Hello, World!asdsad",
+  "addToAdmin": "Add to admin",
+  "deleteFromAdmin": "Delete From Admin",
+  "Blocked": "Blocked",
+  "UnBlocked": "UnBlocked",
+  "Deleted": "Deleted",
+  "Name": "Name",
+  "Email": "Email",
+  "Status": "Status",
+  "Role": "Role",
+  "userNameToken": "User name",
+  "userEmailToken": "Email",
+  "userRoleToken": "Role"
+}

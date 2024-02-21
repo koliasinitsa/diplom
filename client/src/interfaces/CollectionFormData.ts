@@ -1,0 +1,39 @@
+export interface CollectionFormData {
+    id?: number; 
+    name: string;
+    description?: string;
+    image_url: string;
+    user_id: number;
+    category_id: number;
+    custom_string1_state: boolean;
+    custom_string1_name?: string;
+    custom_string2_state: boolean;
+    custom_string2_name?: string;
+    custom_string3_state: boolean;
+    custom_string3_name?: string;
+    custom_int1_state: boolean;
+    custom_int1_name?: string;
+    custom_int2_state: boolean;
+    custom_int2_name?: string;
+    custom_int3_state: boolean;
+    custom_int3_name?: string;
+    custom_text1_state: boolean;
+    custom_text1_name?: string;
+    custom_text2_state: boolean;
+    custom_text2_name?: string;
+    custom_text3_state: boolean;
+    custom_text3_name?: string;
+    custom_boolean1_state: boolean;
+    custom_boolean1_name?: string;
+    custom_boolean2_state: boolean;
+    custom_boolean2_name?: string;
+    custom_boolean3_state: boolean;
+    custom_boolean3_name?: string;
+    custom_date1_state: boolean;
+    custom_date1_name?: string;
+    custom_date2_state: boolean;
+    custom_date2_name?: string;
+    custom_date3_state: boolean;
+    custom_date3_name?: string;
+  }
+  

@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+enum user_status {
+  active
+  blocked
+  deleted
+}
+
+enum user_role {
+  user
+  admin
+}
+
+model Users {
+  id         Int    @id @default(autoincrement())
+  username   String       
+  password   String
+  email      String        @unique
+  status     user_status   @default(active)
+  role       user_role     @default(user)
+  Collection Collections[]
+  Comment    Comments[]
+  Like       Likes[]
+}
+
+
+
+model Categories {
+  id         Int    @id @default(autoincrement())
+  category_name String @unique
+  Collection    Collections[]
+}
+
+model Collections {
+  id         Int    @id @default(autoincrement())
+  name        String
+  description String?
+  image_url   String
+
+  User        Users     @relation(fields: [user_id], references: [id])
+  user_id     Int 
+  
+  category    Categories @relation(fields: [category_id], references: [id])
+  category_id Int 
+
+  custom_string1_state Boolean @default(false)
+  custom_string1_name  String? @db.VarChar(255)
+  custom_string2_state Boolean @default(false)
+  custom_string2_name  String? @db.VarChar(255)
+  custom_string3_state Boolean @default(false)
+  custom_string3_name  String? @db.VarChar(255)
+
+  custom_int1_state Boolean @default(false)
+  custom_int1_name  String? @db.VarChar(255)
+  custom_int2_state Boolean @default(false)
+  custom_int2_name  String? @db.VarChar(255)
+  custom_int3_state Boolean @default(false)
+  custom_int3_name  String? @db.VarChar(255)
+
+  custom_text1_state Boolean @default(false)
+  custom_text1_name  String? @db.VarChar(255)
+  custom_text2_state Boolean @default(false)
+  custom_text2_name  String? @db.VarChar(255)
+  custom_text3_state Boolean @default(false)
+  custom_text3_name  String? @db.VarChar(255)
+
+  custom_boolean1_state Boolean @default(false)
+  custom_boolean1_name  String? @db.VarChar(255)
+  custom_boolean2_state Boolean @default(false)
+  custom_boolean2_name  String? @db.VarChar(255)
+  custom_boolean3_state Boolean @default(false)
+  custom_boolean3_name  String? @db.VarChar(255)
+
+  custom_date1_state Boolean @default(false)
+  custom_date1_name  String? @db.VarChar(255)
+  custom_date2_state Boolean @default(false)
+  custom_date2_name  String? @db.VarChar(255)
+  custom_date3_state Boolean @default(false)
+  custom_date3_name  String? @db.VarChar(255)
+  Item               Items[]
+}
+
+model Tags {
+  id         Int  @id @default(autoincrement())
+  tag_name String @unique
+  items      ItemTags[]
+}
+
+model ItemTags {
+  tag_id Int
+  item_id Int
+
+  tags    Tags @relation(fields: [tag_id], references: [id])
+  items   Items @relation(fields: [item_id], references: [id])
+
+  @@id([tag_id, item_id])
+}
+
+model Items {
+  id             Int    @id @default(autoincrement())
+  name           String
+  tags           ItemTags[]
+  collection     Collections @relation(fields: [collection_id], references: [id])
+  collection_id  Int 
+
+
+  custom_string1_value String? @db.VarChar(255)
+  custom_string2_value String? @db.VarChar(255)
+  custom_string3_value String? @db.VarChar(255)
+
+  custom_int1_value Int?
+  custom_int2_value Int?
+  custom_int3_value Int?
+
+  custom_text1_value String? @db.Text
+  custom_text2_value String? @db.Text
+  custom_text3_value String? @db.Text
+
+  custom_boolean1_value Boolean?
+  custom_boolean2_value Boolean?
+  custom_boolean3_value Boolean?
+
+  custom_date1_value DateTime?
+  custom_date2_value DateTime?
+  custom_date3_value DateTime?
+  Comment            Comments[]
+  Like               Likes[]
+}
+
+
+
+
+model Comments {
+  id         Int    @id @default(autoincrement())
+  content String
+  user    Users   @relation(fields: [user_id], references: [id])
+  user_id Int 
+  item    Items   @relation(fields: [item_id], references: [id])
+  item_id Int 
+}
+
+model Likes {
+  id         Int    @id @default(autoincrement())
+  user    Users   @relation(fields: [user_id], references: [id])
+  user_id Int 
+  item    Items   @relation(fields: [item_id], references: [id])
+  item_id Int 
+}

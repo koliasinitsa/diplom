@@ -1,0 +1,17 @@
+{
+  "hello": "Привет 111111",
+  "world": "Мир 11111",
+  "greeting": "Привет, Мир! 1111111",
+  "addToAdmin": "Добавить в админы",
+  "deleteFromAdmin": "Удалить из админов",
+  "Blocked": "Блокировать",
+  "UnBlocked": "Разблокировать",
+  "Deleted": "Удалить",
+  "Name": "Имя",
+  "Email": "Почта",
+  "Status": "Статус",
+  "Role": "Роль",
+  "userNameToken": "Имя пользователя",
+  "userEmailToken": "Почта",
+  "userRoleToken": "Роль"
+}
