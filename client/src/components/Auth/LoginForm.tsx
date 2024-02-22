@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
         // Например, отправить запрос на сервер для аутентификации
 
         // После успешной аутентификации можно выполнить необходимые действия, например, перенаправить пользователя на другую страницу
-
+        console.log(email, password)
         // Очищаем поля ввода и ошибку
         setEmail('');
         setPassword('');
@@ -56,7 +56,7 @@ const LoginForm: React.FC = () => {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Typography variant="body2">
+                        <Typography variant="body2" sx={{ textAlign: 'center', marginTop: 2 }}>
                             Нет аккаунта? <Link to="/Registration">Зарегистрироваться</Link>
                         </Typography>
                     </Grid>

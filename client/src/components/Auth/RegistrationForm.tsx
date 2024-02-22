@@ -19,7 +19,7 @@ const RegistrationForm: React.FC = () => {
 
     // Здесь можно отправить данные на сервер или выполнить другие действия
     // например, зарегистрировать пользователя
-
+    console.log(email, password)
     // После успешной обработки формы очищаем состояния и ошибку
     setEmail('');
     setPassword('');
@@ -28,7 +28,7 @@ const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> {/* Устанавливаем ширину, центрируем и добавляем отступ сверху */}
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> 
       <form onSubmit={handleSubmit}>
         <Grid container direction="column" spacing={2}>
           <Grid item>
@@ -72,7 +72,7 @@ const RegistrationForm: React.FC = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ textAlign: 'center', marginTop: 2 }}> 
               Есть аккаунт? <Link to="/AuthForm">Войдите</Link>
             </Typography>
           </Grid>
