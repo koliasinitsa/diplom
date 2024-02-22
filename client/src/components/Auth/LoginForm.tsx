@@ -1,68 +1,67 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Button, TextField, Typography, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Grid, Typography, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-interface FormData {
-    email: string;
-    password: string;
-}
+const LoginForm: React.FC = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-interface LoginFormProps {
-    onSubmit: (formData: FormData) => Promise<void>;
-}
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
-    const [formData, setFormData] = useState<FormData>({
-        email: '',
-        password: '',
-    });
+        // Здесь можно выполнить проверку email и пароля
+        // Например, отправить запрос на сервер для аутентификации
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+        // После успешной аутентификации можно выполнить необходимые действия, например, перенаправить пользователя на другую страницу
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        // Добавьте валидацию данных по желанию
-        await onSubmit(formData); // Вызываем onSubmit с объектом formData
+        // Очищаем поля ввода и ошибку
+        setEmail('');
+        setPassword('');
+        setError('');
     };
 
     return (
-        <Box>
-            <Typography component="h1" variant="h5">
-            
-            </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    name="email"
-                    autoComplete="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Пароль"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
-                <Button type="submit" fullWidth variant="contained" color="primary">
-                    Войти
-                </Button>
-            </Box>
+        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> {/* Используем встроенные стили */}
+            <form onSubmit={handleSubmit}>
+                <Grid container direction="column" spacing={2}>
+                    <Grid item>
+                        <TextField
+                            label="Email"
+                            type="email"
+                            variant="outlined"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            fullWidth
+                        />
+                    </Grid>
+                    {error && (
+                        <Grid item>
+                            <Typography color="error">{error}</Typography>
+                        </Grid>
+                    )}
+                    <Grid item>
+                        <Button type="submit" variant="contained" color="primary" fullWidth>
+                            Войти
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="body2">
+                            Нет аккаунта? <Link to="/Registration">Зарегистрироваться</Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </form>
         </Box>
     );
 };

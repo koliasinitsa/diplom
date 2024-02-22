@@ -1,88 +1,85 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Button, TextField, Typography, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Grid, Typography, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-interface FormData {
-    username: string;
-    email: string;
-    password: string;
-}
+const RegistrationForm: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
-interface RegistrationFormProps {
-    onSubmit: (formData: FormData) => Promise<void>;
-}
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit }) => {
-    const [formData, setFormData] = useState<FormData>({
-        username: '',
-        email: '',
-        password: '',
-    });
+    // Проверка на совпадение паролей
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+    // Здесь можно отправить данные на сервер или выполнить другие действия
+    // например, зарегистрировать пользователя
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        // Добавьте валидацию данных по желанию
-        await onSubmit(formData); // Вызываем onSubmit с объектом formData
-        setFormData({ // Очищаем форму после успешной отправки
-            username: '',
-            email: '',
-            password: '',
-        });
-    };
+    // После успешной обработки формы очищаем состояния и ошибку
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setError('');
+  };
 
-
-    return (
-        <Box>
-            <Typography component="h1" variant="h5">
-                
+  return (
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> {/* Устанавливаем ширину, центрируем и добавляем отступ сверху */}
+      <form onSubmit={handleSubmit}>
+        <Grid container direction="column" spacing={2}>
+          <Grid item>
+            <TextField
+              label="Email"
+              type="email"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Confirm Password"
+              type="password"
+              variant="outlined"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              fullWidth
+            />
+          </Grid>
+          {error && (
+            <Grid item>
+              <Typography color="error">{error}</Typography>
+            </Grid>
+          )}
+          <Grid item>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Зарегистрироваться
+            </Button>
+          </Grid>
+          <Grid item>
+            <Typography variant="body2">
+              Есть аккаунт? <Link to="/AuthForm">Войдите</Link>
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                <TextField
-                    margin="normal"
-                    fullWidth
-                    id="username"
-                    label="Имя пользователя"
-                    name="username"
-                    autoComplete="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    name="email"
-                    autoComplete="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Пароль"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
-                <Button type="submit" fullWidth variant="contained" color="primary">
-                    Зарегистрироваться
-                </Button>
-            </Box>
-        </Box>
-    );
+          </Grid>
+        </Grid>
+      </form>
+    </Box>
+  );
 };
 
 export default RegistrationForm;
