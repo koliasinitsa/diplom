@@ -64,16 +64,20 @@ const Header: React.FC = () => {
 
     //onst isAuthenticated = false // есть пользователь или нет, заглушка
     const handleLoginClick = () => {
-        navigate('/AuthForm'); 
+        navigate('/AuthForm');
     };
 
-    
+
 
     return (
         <AppBar position="fixed" >
             <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', }}>
-                    <Link to="/" style={{ marginRight: '100px' }}>
+                    <Link to="/" style={{
+                        marginLeft: '100px',
+                        marginRight: '200px', display: 'inline-block',
+                        textDecoration: 'none', color: 'inherit'
+                    }}>
                         <HomeIcon />
                     </Link>
                     {/* Поисковая строка (слева) с ограниченной шириной */}
