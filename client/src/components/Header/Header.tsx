@@ -67,8 +67,6 @@ const Header: React.FC = () => {
         navigate('/AuthForm');
     };
 
-
-
     return (
         <AppBar position="fixed" >
             <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -85,7 +83,6 @@ const Header: React.FC = () => {
                         <SearchPanel />
                     </div>
                 </div>
-
 
                 {/* Иконка смены цвета и языковой выбор */}
                 <div>
@@ -104,7 +101,6 @@ const Header: React.FC = () => {
                     >
                         <LanguageSelector />
                     </IconButton>
-
 
                     {/* Проверка авторизации */}
                     {isAuthenticated ? (
