@@ -7,8 +7,8 @@ CREATE TYPE "user_role" AS ENUM ('user', 'admin');
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
-    "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "status" "user_status" NOT NULL DEFAULT 'active',
     "role" "user_role" NOT NULL DEFAULT 'user',
 
@@ -30,10 +30,10 @@ CREATE TABLE "Profile" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Users_password_key" ON "Users"("password");
+CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
+CREATE UNIQUE INDEX "Users_password_key" ON "Users"("password");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");

@@ -24,8 +24,8 @@ enum user_role {
 
 model Users {
   id         Int    @id @default(autoincrement())     
-  password   String        @unique
   email      String        @unique
+  password   String        @unique
   status     user_status   @default(active)
   role       user_role     @default(user)
   profile    Profile?
