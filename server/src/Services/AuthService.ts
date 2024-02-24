@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 const saltRounds = 10;
 const JWT_SECRET: string = process.env.JWT_SECRET || '';
 
-export const registerUserService = async (username: string, email: string, password: string) => {
+export const registerUserService = async ( email: string, password: string) => {
   try {
     
     // Генерация рандомной соли для каждого пользователя
@@ -24,7 +24,6 @@ export const registerUserService = async (username: string, email: string, passw
 
     const user = await prisma.users.create({
       data: {
-        username,
         email,
         password: hashedPassword,
         status: user_status.active,
@@ -60,8 +59,6 @@ export const authenticateUserService = async (email: string, password: string) =
       const token = jwt.sign(
         {
           userId: user.id,
-          username: user.username,
-          email: user.email,
           role: user.role, // Добавляем информацию о роли пользователя
         },
         JWT_SECRET,
