@@ -125,7 +125,7 @@ const Header: React.FC = () => {
                         open={userMenuOpen}
                         onClose={handleCloseUserMenu}
                     >
-                        <Link to="/UserProfile" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Link to="/MyProfile" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
                         </Link>
                         {role === 'admin' && (

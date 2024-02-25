@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 
 import HomePage from '../components/Home/HomePage';
 import UsersTable from '../components/UsersTable/UsersTable';
-import UserProfilePage from '../components/Profile/UserProfilePage';
 import RegistrationForm from '../components/Auth/RegistrationForm';
 import LoginForm from '../components/Auth/LoginForm';
+import MyProfile from '../components/Profile/MyProfile';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/Registration" element={<RegistrationForm />} />
       <Route path="/AuthForm" element={<LoginForm />} />
       <Route path="/UsersTable" element={<UsersTable />} />
-      <Route path="/UserProfile" element={<UserProfilePage />} />
+      <Route path="/MyProfile" element={<MyProfile />} />
     </Routes>
   );
 };

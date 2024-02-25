@@ -1,4 +1,4 @@
-// src/components/Profile/UserProfilePage.tsx
+// src/components/Profile/MyProfile.tsx
 import React, { useEffect, useState } from 'react';
 
 import Header from '../Header/Header';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Button } from 'react-bootstrap';
 
 
-const UserProfilePage: React.FC = () => {
+const MyProfile: React.FC = () => {
   const { t } = useTranslation();
 
   const [userData, setUserData] = useState({
@@ -152,4 +152,4 @@ const UserProfilePage: React.FC = () => {
   );
 };
 
-export default UserProfilePage;
+export default MyProfile;

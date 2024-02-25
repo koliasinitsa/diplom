@@ -171,7 +171,7 @@ const UsersTable: React.FC = () => {
                 onChange={handleSelectAll}
               />
             </TableCell>
-            <TableCell>{t('Name')}</TableCell>
+            {/* <TableCell>{t('Name')}</TableCell> */}
             <TableCell>{t('Email')}</TableCell>
             <TableCell>{t('Status')}</TableCell>
             <TableCell>{t('Role')}</TableCell>
@@ -189,7 +189,7 @@ const UsersTable: React.FC = () => {
                   onChange={() => handleSelectUser(user.id)}
                 />
               </TableCell>
-              <TableCell>{user.username}</TableCell>
+              {/* <TableCell>{user.username}</TableCell> */}
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.status}</TableCell>
               <TableCell>{user.role}</TableCell>
