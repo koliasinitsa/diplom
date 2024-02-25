@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { registerUser } from '../../services/AuthService';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,13 +9,28 @@ const RegistrationForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     // Проверка на совпадение паролей
     if (password !== confirmPassword) {
       setError('Пароли не совпадают');
       return;
+    }
+
+    try {
+      const response = await registerUser(email, password);
+      console.log(response); // Выводим ответ в консоль
+
+      // Очищаем поля ввода и ошибку
+      setEmail('');
+      setPassword('');
+      setError('');
+    } catch (error: any) {
+      // Обрабатываем ошибку, если произошла
+      console.error('Authentication error:', error);
+      // Можно установить ошибку в стейт, чтобы отобразить ее пользователю
+      setError(error.message); // Предполагается, что возвращаемая ошибка имеет свойство message
     }
 
     // Здесь можно отправить данные на сервер или выполнить другие действия
@@ -28,7 +44,7 @@ const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> 
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}>
       <form onSubmit={handleSubmit}>
         <Grid container direction="column" spacing={2}>
           <Grid item>
@@ -72,7 +88,7 @@ const RegistrationForm: React.FC = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Typography variant="body2" sx={{ textAlign: 'center', marginTop: 2 }}> 
+            <Typography variant="body2" sx={{ textAlign: 'center', marginTop: 2 }}>
               Есть аккаунт? <Link to="/AuthForm">Войдите</Link>
             </Typography>
           </Grid>

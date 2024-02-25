@@ -1,28 +1,41 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { loginUser } from '../../services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async  (event: React.FormEvent) => {
         event.preventDefault();
-
-        // Здесь можно выполнить проверку email и пароля
-        // Например, отправить запрос на сервер для аутентификации
-
-        // После успешной аутентификации можно выполнить необходимые действия, например, перенаправить пользователя на другую страницу
-        console.log(email, password)
-        // Очищаем поля ввода и ошибку
-        setEmail('');
-        setPassword('');
-        setError('');
+        try {
+            // Здесь вызываем функцию loginUser и передаем ей email и password
+            const response = await loginUser(email, password);
+            
+            // После успешной аутентификации можно выполнить необходимые действия,
+            // например, перенаправить пользователя на другую страницу
+            console.log(response); // Выводим ответ в консоль
+            
+            // Очищаем поля ввода и ошибку
+            setEmail('');
+            setPassword('');
+            setError('');
+            navigate('/');
+        } catch (error: any) {
+            // Обрабатываем ошибку, если произошла
+            console.error('Authentication error:', error);
+            // Можно установить ошибку в стейт, чтобы отобразить ее пользователю
+            setError(error.message); // Предполагается, что возвращаемая ошибка имеет свойство message
+        }
     };
 
     return (
-        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> {/* Используем встроенные стили */}
+        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> 
             <form onSubmit={handleSubmit}>
                 <Grid container direction="column" spacing={2}>
                     <Grid item>
