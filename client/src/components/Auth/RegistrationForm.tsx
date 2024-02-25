@@ -17,17 +17,12 @@ const RegistrationForm: React.FC = () => {
       setError('Пароли не совпадают');
       return;
     }
-
     try {
-      const response = await registerUser(email, password);
-      console.log(response); // Выводим ответ в консоль
-
-      // Очищаем поля ввода и ошибку
+      await registerUser(email, password);
       setEmail('');
       setPassword('');
       setError('');
     } catch (error: any) {
-      // Обрабатываем ошибку, если произошла
       console.error('Authentication error:', error);
       // Можно установить ошибку в стейт, чтобы отобразить ее пользователю
       setError(error.message); // Предполагается, что возвращаемая ошибка имеет свойство message

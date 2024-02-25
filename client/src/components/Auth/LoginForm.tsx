@@ -3,6 +3,7 @@ import { TextField, Button, Grid, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../../services/AuthService';
 import { useNavigate } from 'react-router-dom';
+import ErrorAlert from '../Alert/ErrorAlert';
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -11,31 +12,21 @@ const LoginForm: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async  (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            // Здесь вызываем функцию loginUser и передаем ей email и password
-            const response = await loginUser(email, password);
-            
-            // После успешной аутентификации можно выполнить необходимые действия,
-            // например, перенаправить пользователя на другую страницу
-            console.log(response); // Выводим ответ в консоль
-            
-            // Очищаем поля ввода и ошибку
+            await loginUser(email, password);
             setEmail('');
             setPassword('');
             setError('');
             navigate('/');
         } catch (error: any) {
-            // Обрабатываем ошибку, если произошла
-            console.error('Authentication error:', error);
-            // Можно установить ошибку в стейт, чтобы отобразить ее пользователю
-            setError(error.message); // Предполагается, что возвращаемая ошибка имеет свойство message
+            setError(error.error);
         }
     };
 
     return (
-        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}> 
+        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}>
             <form onSubmit={handleSubmit}>
                 <Grid container direction="column" spacing={2}>
                     <Grid item>
@@ -58,11 +49,7 @@ const LoginForm: React.FC = () => {
                             fullWidth
                         />
                     </Grid>
-                    {error && (
-                        <Grid item>
-                            <Typography color="error">{error}</Typography>
-                        </Grid>
-                    )}
+                    {error && <ErrorAlert error={error} open={true} />}
                     <Grid item>
                         <Button type="submit" variant="contained" color="primary" fullWidth>
                             Войти
