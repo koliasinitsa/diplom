@@ -33,7 +33,6 @@ export const registerUserService = async ( email: string, password: string) => {
 
     return user;
   } catch (error) {
-    console.error('Error in registerUserService:', error);
     throw new Error('Failed to register user.');
   }
 };
@@ -71,7 +70,6 @@ export const authenticateUserService = async (email: string, password: string) =
       throw new Error('Invalid password');
     }
   } catch (error) {
-    console.error('Error in authenticateUserService:', error);
     throw new Error('Authentication failed');
   }
 };
