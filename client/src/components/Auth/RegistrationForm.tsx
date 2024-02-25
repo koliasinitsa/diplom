@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { registerUser } from '../../services/AuthService';
+import SuccessAlert from '../Alert/SuccessAlert';
+import ErrorAlert from '../Alert/ErrorAlert';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -18,24 +21,16 @@ const RegistrationForm: React.FC = () => {
       return;
     }
     try {
-      await registerUser(email, password);
+      const response = await registerUser(email, password);
       setEmail('');
       setPassword('');
       setError('');
+      setConfirmPassword('');
+      setSuccessMessage(response.message)
     } catch (error: any) {
-      console.error('Authentication error:', error);
-      // Можно установить ошибку в стейт, чтобы отобразить ее пользователю
-      setError(error.message); // Предполагается, что возвращаемая ошибка имеет свойство message
+      setError(error.error);
     }
 
-    // Здесь можно отправить данные на сервер или выполнить другие действия
-    // например, зарегистрировать пользователя
-    console.log(email, password)
-    // После успешной обработки формы очищаем состояния и ошибку
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    setError('');
   };
 
   return (
@@ -72,11 +67,8 @@ const RegistrationForm: React.FC = () => {
               fullWidth
             />
           </Grid>
-          {error && (
-            <Grid item>
-              <Typography color="error">{error}</Typography>
-            </Grid>
-          )}
+          {error && <ErrorAlert error={error} open={true} />}
+          {successMessage && <SuccessAlert message={successMessage} open={true} />}
           <Grid item>
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Зарегистрироваться
