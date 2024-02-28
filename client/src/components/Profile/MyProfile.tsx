@@ -1,49 +1,39 @@
-// src/components/Profile/MyProfile.tsx
 import React, { useEffect, useState } from 'react';
-
+import { Form, Button } from 'react-bootstrap';
 import Header from '../Header/Header';
 import { useTranslation } from 'react-i18next';
-import { Form, Button } from 'react-bootstrap';
-
+import { getUserProfile, updateUserProfile } from '../../services/ProfileServices';
+import { getDecodedToken } from '../../services/TokenServices';
 
 const MyProfile: React.FC = () => {
   const { t } = useTranslation();
 
   const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    dateOfBirth: '',
-    country: '',
-    address: ''
+    name: '',
+    last_name: '',
+    phone: '',
+    citizenship: '',
+    residence: ''
   });
   const [editable, setEditable] = useState(false);
+  const [userId, setUserId] = useState('');
 
-  // Функция для загрузки данных с сервера (замените на вашу реализацию)
-  const loadDataFromServer = () => {
-    // Пример загрузки данных с сервера
-    // fetch('your-api-endpoint')
-    //   .then(response => response.json())
-    //   .then(data => setUserData(data))
-    //   .catch(error => console.error('Error loading data:', error));
-    // Для примера загружаем фиктивные данные
-    const fakeDataFromServer = {
-      firstName: 'John',
-      lastName: 'Doe',
-      phoneNumber: '123-456-7890',
-      dateOfBirth: '1990-01-01',
-      country: 'USA',
-      address: '123 Main St, New York'
-    };
-    setUserData(fakeDataFromServer);
+  const loadDataFromServer = async () => {
+    try {
+      const response = await getDecodedToken(); // Получение id пользователя из токена
+      const userId = response.userId;
+      setUserId(userId);
+      const userProfile = await getUserProfile(userId); // Получение профиля пользователя
+      setUserData(userProfile);
+    } catch (error) {
+      console.error('Failed to load user data:', error);
+    }
   };
 
-  // Загрузка данных с сервера при монтировании компонента
   useEffect(() => {
     loadDataFromServer();
   }, []);
 
-  // Обработчик изменения значений полей ввода
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setUserData(prevData => ({
@@ -52,31 +42,32 @@ const MyProfile: React.FC = () => {
     }));
   };
 
-  // Обработчик нажатия кнопки "Изменить"
   const handleEditClick = () => {
     setEditable(true);
   };
 
-  // Обработчик нажатия кнопки "Сохранить"
-  const handleSaveClick = () => {
-    // Здесь можно отправить данные на сервер или выполнить другие действия
-    console.log('Saved data:', userData);
-    setEditable(false);
+  const handleSaveClick = async () => {
+    try {
+      await updateUserProfile(userId, userData); // Обновление профиля пользователя
+      setEditable(false);
+    } catch (error) {
+      console.error('Failed to save user data:', error);
+    }
   };
-  
+
   return (
     <div>
       <Header />
       <br />
       <br />
       <div className="container mt-5">
-      <Form>
+        <Form>
           <Form.Group controlId="formFirstName">
             <Form.Label>{t('First Name')}</Form.Label>
             <Form.Control
               type="text"
-              name="firstName"
-              value={userData.firstName}
+              name="name"
+              value={userData.name}
               onChange={handleInputChange}
               disabled={!editable}
             />
@@ -86,8 +77,8 @@ const MyProfile: React.FC = () => {
             <Form.Label>{t('Last Name')}</Form.Label>
             <Form.Control
               type="text"
-              name="lastName"
-              value={userData.lastName}
+              name="last_name"
+              value={userData.last_name}
               onChange={handleInputChange}
               disabled={!editable}
             />
@@ -97,30 +88,20 @@ const MyProfile: React.FC = () => {
             <Form.Label>{t('Phone Number')}</Form.Label>
             <Form.Control
               type="tel"
-              name="phoneNumber"
-              value={userData.phoneNumber}
+              name="phone"
+              value={userData.phone}
               onChange={handleInputChange}
               disabled={!editable}
             />
           </Form.Group>
 
-          <Form.Group className='mt-3' controlId="formDateOfBirth">
-            <Form.Label>{t('Date of Birth')}</Form.Label>
-            <Form.Control
-              type="date"
-              name="dateOfBirth"
-              value={userData.dateOfBirth}
-              onChange={handleInputChange}
-              disabled={!editable}
-            />
-          </Form.Group>
 
           <Form.Group className='mt-3' controlId="formCountry">
             <Form.Label>{t('Country')}</Form.Label>
             <Form.Control
               type="text"
-              name="country"
-              value={userData.country}
+              name="citizenship"
+              value={userData.citizenship}
               onChange={handleInputChange}
               disabled={!editable}
             />
@@ -131,20 +112,20 @@ const MyProfile: React.FC = () => {
             <Form.Control
               as="textarea"
               rows={3}
-              name="address"
-              value={userData.address}
+              name="residence"
+              value={userData.residence}
               onChange={handleInputChange}
               disabled={!editable}
             />
           </Form.Group>
 
           <div className='mt-3'>
-          <Button  variant="primary" onClick={handleEditClick} disabled={editable}>
-            {t('Edit')}
-          </Button>
-          <Button className="ms-2" variant="success" onClick={handleSaveClick} disabled={!editable}>
-            {t('Save')}
-          </Button>
+            <Button variant="primary" onClick={handleEditClick} disabled={editable}>
+              {t('Edit')}
+            </Button>
+            <Button className="ms-2" variant="success" onClick={handleSaveClick} disabled={!editable}>
+              {t('Save')}
+            </Button>
           </div>
         </Form>
       </div>
