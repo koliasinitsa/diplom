@@ -40,7 +40,7 @@ model Profile {
   name         String
   last_name    String
   phone        String
-  date_bird    DateTime       
+  date_birth   DateTime       @db.Date 
   citizenship  String
   residence    String
 }

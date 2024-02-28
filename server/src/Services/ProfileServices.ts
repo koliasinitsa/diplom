@@ -20,6 +20,7 @@ class ProfileServices {
             const profile = await prisma.profile.create({
                 data: {
                     ...profileData,
+                    date_birth: new Date(profileData.date_birth),
                     user: { connect: { id: userId } }
                 }
             });

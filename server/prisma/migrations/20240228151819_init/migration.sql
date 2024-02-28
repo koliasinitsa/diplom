@@ -22,7 +22,7 @@ CREATE TABLE "Profile" (
     "name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "date_bird" TIMESTAMP(3) NOT NULL,
+    "date_birth" DATE NOT NULL,
     "citizenship" TEXT NOT NULL,
     "residence" TEXT NOT NULL,
 
