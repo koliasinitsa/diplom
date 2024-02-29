@@ -15,30 +15,32 @@ class ProfileServices {
         }
     }
 
-    async createProfile(userId: number, profileData: any) {
+    async updateProfile(userId: number, profileData: any) {
         try {
-            const profile = await prisma.profile.create({
-                data: {
-                    ...profileData,
-                    date_birth: new Date(profileData.date_birth),
-                    user: { connect: { id: userId } }
-                }
+            // Проверяем, существует ли профиль с данным userId
+            const existingProfile = await prisma.profile.findUnique({
+                where: { userId }
             });
-            return profile;
+    
+            if (existingProfile) {
+                // Если профиль существует, обновляем его данные
+                const updatedProfile = await prisma.profile.update({
+                    where: { userId },
+                    data: profileData
+                });
+                return updatedProfile;
+            } else {
+                // Если профиля нет, создаем новый
+                const newProfile = await prisma.profile.create({
+                    data: {
+                        ...profileData,
+                        user: { connect: { id: userId } }
+                    }
+                });
+                return newProfile;
+            }
         } catch (error) {
-            throw new Error(`Error creating profile: ${error}`);
-        }
-    }
-
-    async updateProfile(userId: number, updatedProfileData: any) {
-        try {
-            const profile = await prisma.profile.update({
-                where: { userId },
-                data: updatedProfileData
-            });
-            return profile;
-        } catch (error) {
-            throw new Error(`Error updating profile: ${error}`);
+            throw new Error(`Error creating or updating profile: ${error}`);
         }
     }
 }

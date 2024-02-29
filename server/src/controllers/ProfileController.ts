@@ -14,17 +14,6 @@ export async function getProfile(req: Request, res: Response) {
 }
 
 
-export async function createProfile(req: Request, res: Response) {
-    const userId = parseInt(req.params.id, 10);
-    const profileData = req.body;
-    try {
-        const profile = await ProfileServices.createProfile(userId, profileData);
-        res.json(profile);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to create profile' });
-    }
-}
-
 export async function updateProfile(req: Request, res: Response) {
     const userId = parseInt(req.params.id, 10);
     const updatedProfileData = req.body;

@@ -4,8 +4,7 @@ import * as ProfileController from '../controllers/ProfileController';
 
 const router = express.Router();
 
-// POST /profile
-router.post('/profile/create/:id', ProfileController.createProfile);
+
 
 // PUT /profile
 router.put('/profile/update/:id', ProfileController.updateProfile);

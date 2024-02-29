@@ -33,3 +33,13 @@
     justify-content: space-between;
 }
 
+
+.profile-data-container {
+    margin-bottom: 20px; /* Расстояние между ProfileData и кнопкой */
+  }
+  
+  .edit-profile-button-container {
+    display: flex;
+    justify-content: flex-end; /* Выравнивание кнопки справа */
+  }
+  
