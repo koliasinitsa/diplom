@@ -11,12 +11,17 @@ import { useTranslation } from 'react-i18next';
 import Header from '../Header/Header';
 import { User } from '../../interfaces/user';
 import { getAllUsers, deleteUser, blockUser, unblockUser, addAdmin, removeAdmin } from '../../services/UserServices';
+import { Link } from 'react-router-dom';
+// import SuccessAlert from '../Alert/SuccessAlert';
+// import ErrorAlert from '../Alert/ErrorAlert';
 
 
 const UsersTable: React.FC = () => {
   const { t } = useTranslation();
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [users, setUsers] = useState<User[]>([]);
+  // const [successMessage, setSuccessMessage] = useState('');
+  // const [error, setError] = useState('');
 
   // Загрузка данных при монтировании компонента
   useEffect(() => {
@@ -193,6 +198,14 @@ const UsersTable: React.FC = () => {
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.status}</TableCell>
               <TableCell>{user.role}</TableCell>
+              <TableCell>
+                {/* Используем Link для перехода на страницу профиля */}
+                <Link to={`/userProfile/${user.id}`}>
+                  <Button variant="outlined">
+                    {t('View')}
+                  </Button>
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

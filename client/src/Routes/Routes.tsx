@@ -8,6 +8,7 @@ import RegistrationForm from '../components/Auth/RegistrationForm';
 import LoginForm from '../components/Auth/LoginForm';
 import MyProfile from '../components/Profile/MyProfile';
 import EditProfile from '../components/Profile/EditProfile';
+import UserProfilePage from '../components/UsersTable/UserProfilePage';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -16,6 +17,8 @@ const AppRoutes: React.FC = () => {
       <Route path="/Registration" element={<RegistrationForm />} />
       <Route path="/AuthForm" element={<LoginForm />} />
       <Route path="/UsersTable" element={<UsersTable />} />
+      <Route path="/userProfile/:userId" element={<UserProfilePage/>} />
+
       <Route path="/MyProfile" element={<MyProfile />} />
       <Route path="/EditProfile" element={<EditProfile />} />
     </Routes>

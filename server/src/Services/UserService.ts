@@ -11,6 +11,19 @@ class UserService {
   }
 
   async deleteUserById(userId: number) {
+    // Найдем профиль пользователя по userId
+    const profile = await prisma.profile.findUnique({
+      where: { userId: userId },
+    });
+
+    // Если профиль существует, удалим его
+    if (profile) {
+      await prisma.profile.delete({
+        where: { id: profile.id },
+      });
+    }
+
+    // Теперь удалим самого пользователя
     return prisma.users.delete({
       where: { id: userId },
     });

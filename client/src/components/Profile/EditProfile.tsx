@@ -4,6 +4,9 @@ import Header from '../Header/Header';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile, updateUserProfile } from '../../services/ProfileServices';
 import { getDecodedToken } from '../../services/TokenServices';
+import SuccessAlert from '../Alert/SuccessAlert';
+import ErrorAlert from '../Alert/ErrorAlert';
+
 
 const EditProfile: React.FC = () => {
   const { t } = useTranslation();
@@ -17,6 +20,8 @@ const EditProfile: React.FC = () => {
   });
   const [editable, setEditable] = useState(false);
   const [userId, setUserId] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +56,9 @@ const EditProfile: React.FC = () => {
     try {
       await updateUserProfile(userId, userData); // Обновление профиля пользователя
       setEditable(false);
+      setSuccessMessage('Success')
     } catch (error) {
+      setError('Failed to save user data:')
       console.error('Failed to save user data:', error);
     }
   };
@@ -95,7 +102,8 @@ const EditProfile: React.FC = () => {
               disabled={!editable}
             />
           </Form.Group>
-
+          {error && <ErrorAlert error={error} open={true} />}
+          {successMessage && <SuccessAlert message={successMessage} open={true} />}
 
           <Form.Group className='mt-3' controlId="formCountry">
             <Form.Label>{t('Country')}</Form.Label>
