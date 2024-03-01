@@ -12,22 +12,22 @@ import Header from '../Header/Header';
 import { User } from '../../interfaces/user';
 import { getAllUsers, deleteUser, blockUser, unblockUser, addAdmin, removeAdmin } from '../../services/UserServices';
 import { Link } from 'react-router-dom';
-// import SuccessAlert from '../Alert/SuccessAlert';
-// import ErrorAlert from '../Alert/ErrorAlert';
+import SuccessAlert from '../Alert/SuccessAlert';
+import ErrorAlert from '../Alert/ErrorAlert';
 
 
 const UsersTable: React.FC = () => {
   const { t } = useTranslation();
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  // const [successMessage, setSuccessMessage] = useState('');
-  // const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
 
   // Загрузка данных при монтировании компонента
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const fetchedUsers: User[] = await getAllUsers();  
+        const fetchedUsers: User[] = await getAllUsers();
         const users: User[] = fetchedUsers.map((users) => ({
           id: users.id,
           username: users.username,
@@ -41,7 +41,7 @@ const UsersTable: React.FC = () => {
         // Обработка ошибок загрузки пользователей
       }
     };
-  
+
     fetchUsers();
   }, []);
   // Пустой массив зависимостей, чтобы эффект выполнялся только при монтировании компонента
@@ -63,15 +63,20 @@ const UsersTable: React.FC = () => {
     );
   };
 
+  const updateUsers = async () => {
+    const updatedUsers = await getAllUsers();
+    // Обновляем состояние компонента с новыми данными
+    setUsers(updatedUsers);
+  }
   const handleAddToAdmin = async () => {
     try {
       // Вызываем функцию из userService для добавления выделенных пользователей в админы
       await addAdmin(selectedUsers);
       // После успешного выполнения запроса можно, например, обновить список пользователей
-      const updatedUsers = await getAllUsers();
-      // Обновляем состояние компонента с новыми данными
-      setUsers(updatedUsers);
+      updateUsers();
+      setSuccessMessage('user add to admin');
     } catch (error) {
+      setError('Error adding users to admin');
       console.error('Error adding users to admin:', error);
     }
   };
@@ -79,9 +84,10 @@ const UsersTable: React.FC = () => {
   const handleDeleteFromAdmin = async () => {
     try {
       await removeAdmin(selectedUsers);
-      const updatedUsers = await getAllUsers();
-      setUsers(updatedUsers);
+      updateUsers();
+      setSuccessMessage('user removing users from admin');
     } catch (error) {
+      setError('Error removing users from admin');
       console.error('Error removing users from admin:', error);
     }
   };
@@ -89,9 +95,10 @@ const UsersTable: React.FC = () => {
   const handleBlock = async () => {
     try {
       await blockUser(selectedUsers);
-      const updatedUsers = await getAllUsers();
-      setUsers(updatedUsers);
+      updateUsers();
+      setSuccessMessage('user blocking');
     } catch (error) {
+      setError('Error blocking users');
       console.error('Error blocking users:', error);
     }
   };
@@ -99,9 +106,10 @@ const UsersTable: React.FC = () => {
   const handleUnblock = async () => {
     try {
       await unblockUser(selectedUsers);
-      const updatedUsers = await getAllUsers();
-      setUsers(updatedUsers);
+      updateUsers();
+      setSuccessMessage('user unblocking');
     } catch (error) {
+      setError('Error unblocking users');
       console.error('Error unblocking users:', error);
     }
   };
@@ -109,16 +117,19 @@ const UsersTable: React.FC = () => {
   const handleDelete = async () => {
     try {
       await deleteUser(selectedUsers);
-      const updatedUsers = await getAllUsers();
-      setUsers(updatedUsers);
+      updateUsers();
+      setSuccessMessage('user delete ');
     } catch (error) {
+      setError('Error deleting users');
       console.error('Error deleting users:', error);
     }
   };
 
   return (
+
     <div >
       <Header />
+      <div className='container'>
       <div style={{ marginTop: '100px' }}>
         <Button
           variant="contained"
@@ -128,7 +139,8 @@ const UsersTable: React.FC = () => {
         >
           {t('addToAdmin')}
         </Button>
-
+        {error && <ErrorAlert error={error} open={true} />}
+        {successMessage && <SuccessAlert message={successMessage} open={true} />}
         <Button
           variant="contained"
           color="error"
@@ -166,7 +178,7 @@ const UsersTable: React.FC = () => {
         </Button>
       </div>
 
-      <Table>
+      <Table style={{ marginTop: '50px' }}>
         <TableHead>
           <TableRow>
             <TableCell padding="checkbox">
@@ -210,6 +222,7 @@ const UsersTable: React.FC = () => {
           ))}
         </TableBody>
       </Table>
+    </div>
     </div>
   );
 }
