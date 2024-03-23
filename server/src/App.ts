@@ -91,35 +91,6 @@ app.get('/cars', async (req: Request, res: Response) => {
 
 const upload = multer({ dest: 'uploads/' });
 
-//Маршрут для загрузки изображений
-app.post('/uploadImages', upload.single('images'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No image uploaded' });
-    }
-
-    // Чтение байтов изображения из временного файла
-    const data = await fs.promises.readFile(req.file.path);
-    //console.log("photoData", data)
-    // Сохранение байтов изображения в базе данных с помощью Prisma
-    const savedImage = await prisma.photo.create({
-      data: {
-        photo: data
-      }
-    });
-
-    // Удаление временного файла
-    await fs.promises.unlink(req.file.path);
-
-    // Отправка айдишника фотографии в ответе
-    res.status(200).json({ imageId: savedImage.id });
-  } catch (error) {
-    console.error('Error uploading image:', error);
-    res.status(500).json({ error: 'Error uploading image' });
-  }
-});
-
-
 
 app.post('/cars', upload.single('images'), async (req, res) => {
   try {
@@ -191,22 +162,3 @@ app.use((err: ErrorRequestHandler, req: express.Request, res: express.Response, 
 });
 
 export default app;
-
-
-
-// {
-// "id": 1,
-// "type": "Седан",
-// "numberOfSeats": 5,
-// "typeEngine": "Бензин",
-// "fuelRate": 8.5,
-// "costDay": 50,
-// "cost3Day": 140,
-// "costWeek": 300,
-// "transmission": "Автоматическая",
-// "name": "Toyota Camry",
-// "year": 2022,
-// "data": {
-//   "type": "Buffer",
-//   "data": []
-// }

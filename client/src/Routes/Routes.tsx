@@ -12,6 +12,8 @@ import UserProfilePage from '../components/UsersTable/UserProfilePage';
 import ItemPage from '../components/Item/ItemPage';
 import ImageComponent from '../components/Item/ImageComponent';
 import CreateItemForm from '../components/Item/CreateItemForm';
+import ItemCard from '../components/Item/ItemCard';
+import ItemTable from '../components/Item/ItemTable';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -30,6 +32,8 @@ const AppRoutes: React.FC = () => {
       <Route path="/ItemPage" element={<ItemPage />} />
       <Route path="/ImageComponent" element={<ImageComponent />} />
       <Route path="/CreateItemForm" element={<CreateItemForm />} />
+      <Route path="/ItemCard" element={<ItemCard />} />
+      <Route path="/ItemTable" element={<ItemTable />} />
     </Routes>
   );
 };
