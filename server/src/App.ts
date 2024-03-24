@@ -34,23 +34,18 @@ app.use('/api', userRoutes);
 app.use('/api', profileRoutes);
 
 
-app.get('/cars', async (req: Request, res: Response) => {
+app.get('/getAllCars', async (req: Request, res: Response) => {
   try {
     const cars = await prisma.car.findMany({
       include: {
         type: {
           select: {
             type: true,
-            numberOfSeats: true,
-            typeEngine: true,
-            fuelRate: true,
           },
         },
         tarif: {
           select: {
             costDay: true,
-            cost3Day: true,
-            costWeek: true,
           },
         },
         transmission: {
@@ -61,24 +56,23 @@ app.get('/cars', async (req: Request, res: Response) => {
         model: {
           select: {
             name: true,
-            year: true,
           },
         },
+        photo: {
+          select: {
+            photo: true
+          }
+        }
       },
     });
 
     const formattedCars = cars.map(car => ({
       id: car.id,
       type: car.type.type,
-      numberOfSeats: car.type.numberOfSeats,
-      typeEngine: car.type.typeEngine,
-      fuelRate: car.type.fuelRate,
       costDay: car.tarif.costDay,
-      cost3Day: car.tarif.cost3Day,
-      costWeek: car.tarif.costWeek,
       transmission: car.transmission.transmission,
       name: car.model.name,
-      year: car.model.year,
+      photo: car.photo.photo
     }));
 
     res.json(formattedCars);
