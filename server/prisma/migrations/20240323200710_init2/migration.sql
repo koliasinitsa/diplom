@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Type" ALTER COLUMN "numberOfSeats" SET DATA TYPE DOUBLE PRECISION;

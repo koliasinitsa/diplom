@@ -9,15 +9,19 @@ interface Item {
     transmission: string;
     type: string;
     costDay: number;
+    photo: {
+        type: string;
+        data: number[];
+    };
 }
 
 const ItemTable: React.FC = () => {
     const [items, setItems] = useState<Item[]>([]);
 
     useEffect(() => {
-        axios.get('https://65fdc985b2a18489b3856bb0.mockapi.io/cars')
+        axios.get('http://localhost:3000/getAllCars')
             .then(response => {
-              //  console.log(response.data)
+                console.log(response.data)
                 setItems(response.data);
             })
             .catch(error => {
@@ -27,11 +31,9 @@ const ItemTable: React.FC = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: '960px', margin: '0 auto', padding: '10px -5px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '10px', maxWidth: '960px', margin: '0 auto', padding: '10px -5px' }}>
                 {items.map((item) => (
-                    <div key={item.id} style={{ flex: '0 0 33.33%', maxWidth: '33.33%', padding: '5px' }}>
-                        <ItemCard item={item} />
-                    </div>
+                    <ItemCard key={item.id} item={item} />
                 ))}
             </div>
         </div>

@@ -141,6 +141,9 @@ app.post('/cars', upload.single('images'), async (req, res) => {
         photo: true,
       },
     });
+    // Удаление временного файла
+    await fs.promises.unlink(req.file.path);
+
     res.status(201).json(createdCar);
   } catch (error) {
     console.error('Error creating car:', error);
