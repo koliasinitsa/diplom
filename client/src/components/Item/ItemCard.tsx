@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 
 interface ItemCardProps {
     item: {
+        id: number,
         name: string;
         transmission: string;
         type: string;
@@ -31,7 +32,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
                 <Card.Text style={{ marginBottom: '5px' }}>
                     <strong>Cost per Day:</strong> {costDay}
                 </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <Button variant="primary">перейти</Button>
             </Card.Body>
         </Card>
     );

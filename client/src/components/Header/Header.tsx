@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+// import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
@@ -86,13 +86,19 @@ const Header: React.FC = () => {
 
                 {/* Иконка смены цвета и языковой выбор */}
                 <div>
-                    <IconButton
+                    {/* <IconButton
                         color="inherit"
                         aria-label="dark mode"
                     >
                         <DarkModeIcon />
-                    </IconButton>
-
+                    </IconButton> */}
+                    {role === 'admin' && (
+                        <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
+                            <Button variant="contained" color="success">
+                                Создать элемент
+                            </Button>
+                        </Link>
+                    )}
                     <IconButton
                         color="inherit"
                         aria-label="language"
