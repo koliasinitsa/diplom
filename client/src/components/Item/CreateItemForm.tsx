@@ -64,11 +64,12 @@ const CreateItemForm = () => {
                     formDataToSend.append(key, value.toString());
                 }
             }
-
-            const response = await axios.post('http://localhost:3000/cars', formDataToSend);
+            // надо сделать проверку на заполяемость формы, чтобы все были выбранны
+            // очищение формы, и алерты вывод
+           // const response = await axios.post('http://localhost:3000/api/createCars', formDataToSend);
 
             console.log('Data sent successfully');
-            console.log('Response:', response.data); // Вывод ответа в консоль
+           // console.log('Response:', response.data); // Вывод ответа в консоль
             // Дополнительные действия после успешной отправки данных
         } catch (error) {
             console.error('Error:', error);
@@ -86,17 +87,43 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="type">
                     <Form.Label>Type</Form.Label>
-                    <Form.Control type="text" placeholder="Enter type" onChange={handleChange} name="type" />
+                    <Form.Select onChange={handleChange} name="type">
+                        <option value="">Type</option>
+                        <option value="Внедорожник">Внедорожник</option>
+                        <option value="кабриолет">кабриолет</option>
+                        <option value="купе">купе</option>
+                        <option value="микроавтобус">микроавтобус</option>
+                        <option value="лифтбек">лифтбек</option>
+                        <option value="минивэн">минивэн</option>
+                        <option value="седан">седан</option>
+                        <option value="универсал">универсал</option>
+                        <option value="хэтчбэк 3дв">хэтчбэк 3 дв</option>
+                        <option value="хэтчбэк 5дв">хэтчбэк 5 дв</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="numberOfSeats">
                     <Form.Label>Number of Seats</Form.Label>
-                    <Form.Control type="number" placeholder="Enter number of seats" onChange={handleChange} name="numberOfSeats" />
+                    <Form.Select onChange={handleChange} name="numberOfSeats">
+                        <option value="">numberOfSeats</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="7">7</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="typeEngine">
                     <Form.Label>Engine Type</Form.Label>
-                    <Form.Control type="text" placeholder="Enter engine type" onChange={handleChange} name="typeEngine" />
+                    <Form.Select onChange={handleChange} name="typeEngine">
+                        <option value="">Engine Type</option>
+                        <option value="Бензин">Бензин</option>
+                        <option value="Бензин(метан)">Бензин(метан)</option>
+                        <option value="Бензин(гибрид)">Бензин(гибрид)</option>
+                        <option value="Дизель">Дизель</option>
+                        <option value="Дизель(гибрид)">Дизель(гибрид)</option>
+                        <option value="Электро">Электро</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="fuelRate">
@@ -121,7 +148,13 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="transmission">
                     <Form.Label>Transmission</Form.Label>
-                    <Form.Control type="text" placeholder="Enter transmission" onChange={handleChange} name="transmission" />
+                    <Form.Select onChange={handleChange} name="transmission">
+                        <option value="">Transmission</option>
+                        <option value="Автомат">Автомат</option>
+                        <option value="Механика">Механика</option>
+                        <option value="Робот">Робот</option>
+                        <option value="Вариатор">Вариатор</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="name">

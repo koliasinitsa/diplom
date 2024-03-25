@@ -10,7 +10,7 @@ const ItemTable: React.FC = () => {
     const [items, setItems] = useState<Item[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/getAllCars')
+        axios.get('http://localhost:3000/api/getAllCars')
             .then(response => {
                 console.log(response.data)
                 setItems(response.data);
