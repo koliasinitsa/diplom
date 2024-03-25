@@ -2,18 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ItemCard from './ItemCard';
+import { Item } from '../../interfaces/ItemCardProps';
 
-interface Item {
-    id: number;
-    name: string;
-    transmission: string;
-    type: string;
-    costDay: number;
-    photo: {
-        type: string;
-        data: number[];
-    };
-}
+
 
 const ItemTable: React.FC = () => {
     const [items, setItems] = useState<Item[]>([]);

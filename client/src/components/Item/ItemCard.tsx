@@ -1,20 +1,9 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { ItemCardProps } from '../../interfaces/ItemCardProps';
+import { Link } from 'react-router-dom';
 
-interface ItemCardProps {
-    item: {
-        id: number;
-        name: string;
-        transmission: string;
-        type: string;
-        costDay: number;
-        photo: {
-            type: string;
-            data: number[];
-        };
-    };
-}
 
 const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
     const { id, name, transmission, type, costDay, photo } = item;
@@ -48,7 +37,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
                 <Card.Text style={{ marginBottom: '5px' }}>
                     <strong>Cost per Day:</strong> {costDay}
                 </Card.Text>
-                <Button variant="primary">перейти</Button>
+                <Link to={`/ItemPage/${id}`}>
+                    <Button variant="primary">перейти</Button>
+                </Link>
             </Card.Body>
         </Card>
     );
