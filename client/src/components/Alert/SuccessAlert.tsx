@@ -7,7 +7,6 @@ interface SuccessAlertProps {
 }
 
 const SuccessAlert: React.FC<SuccessAlertProps> = ({ message, open }) => {
-    console.log(message)
   return (
     <Snackbar open={open} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
       <Alert severity="success">{message}</Alert>

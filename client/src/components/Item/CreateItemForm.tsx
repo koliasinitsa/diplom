@@ -1,21 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
+import { CreateCar } from '../../interfaces/ItemCardProps';
+import ErrorAlert from '../Alert/ErrorAlert';
+import SuccessAlert from '../Alert/SuccessAlert';
 
 const CreateItemForm = () => {
-    const [formData, setFormData] = useState<{
-        type: string;
-        numberOfSeats: number;
-        typeEngine: string;
-        fuelRate: number;
-        costDay: number;
-        cost3Day: number;
-        costWeek: number;
-        transmission: string;
-        name: string;
-        year: number;
-        images: File | null; // Определение типа для image
-    }>({
+    const [formData, setFormData] = useState<CreateCar>({
         type: '',
         numberOfSeats: 0,
         typeEngine: '',
@@ -28,8 +19,21 @@ const CreateItemForm = () => {
         year: 0,
         images: null
     });
+    const [successMessage, setSuccessMessage] = useState('');
+    const [error, setError] = useState('');
+    const formRef = useRef<HTMLFormElement>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Обработчик событий для изменения элементов выбора
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    // Обработчик событий для изменения полей ввода
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         // Проверяем, является ли поле числовым
         const isNumericField = ['numberOfSeats', 'fuelRate', 'costDay', 'cost3Day', 'costWeek', 'year'].includes(name);
@@ -53,7 +57,6 @@ const CreateItemForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(formData); // Вывод данных в консоль
         try {
             const formDataToSend = new FormData();
             if (formData.images) {
@@ -66,20 +69,20 @@ const CreateItemForm = () => {
             }
             // надо сделать проверку на заполяемость формы, чтобы все были выбранны
             // очищение формы, и алерты вывод
-           // const response = await axios.post('http://localhost:3000/api/createCars', formDataToSend);
-
-            console.log('Data sent successfully');
-           // console.log('Response:', response.data); // Вывод ответа в консоль
-            // Дополнительные действия после успешной отправки данных
+            const response = await axios.post('http://localhost:3000/api/createCars', formDataToSend);
+            setSuccessMessage(response.statusText)
+            formRef.current?.reset();
         } catch (error) {
+            setError('Error');
             console.error('Error:', error);
             // Обработка ошибок при выполнении запроса
         }
     };
 
+
     return (
         <Container className="d-flex justify-content-center mt-5">
-            <Form onSubmit={handleSubmit} style={{ width: '400px' }}>
+            <Form  ref={formRef} onSubmit={handleSubmit} style={{ width: '400px' }}>
                 <Form.Group controlId="images">
                     <Form.Label>Upload Image</Form.Label>
                     <Form.Control type="file" onChange={handleImageChange} />
@@ -87,7 +90,7 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="type">
                     <Form.Label>Type</Form.Label>
-                    <Form.Select onChange={handleChange} name="type">
+                    <Form.Select onChange={handleSelectChange} name="type">
                         <option value="">Type</option>
                         <option value="Внедорожник">Внедорожник</option>
                         <option value="кабриолет">кабриолет</option>
@@ -104,7 +107,7 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="numberOfSeats">
                     <Form.Label>Number of Seats</Form.Label>
-                    <Form.Select onChange={handleChange} name="numberOfSeats">
+                    <Form.Select onChange={handleSelectChange} name="numberOfSeats">
                         <option value="">numberOfSeats</option>
                         <option value="2">2</option>
                         <option value="4">4</option>
@@ -115,7 +118,7 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="typeEngine">
                     <Form.Label>Engine Type</Form.Label>
-                    <Form.Select onChange={handleChange} name="typeEngine">
+                    <Form.Select onChange={handleSelectChange} name="typeEngine">
                         <option value="">Engine Type</option>
                         <option value="Бензин">Бензин</option>
                         <option value="Бензин(метан)">Бензин(метан)</option>
@@ -128,27 +131,27 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="fuelRate">
                     <Form.Label>Fuel Rate</Form.Label>
-                    <Form.Control type="number" step="any" placeholder="Enter fuel rate" onChange={handleChange} name="fuelRate" />
+                    <Form.Control type="number" step="any" placeholder="Enter fuel rate" onChange={handleInputChange} name="fuelRate" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="costDay">
                     <Form.Label>Cost per Day</Form.Label>
-                    <Form.Control type="number" placeholder="Enter cost per day" onChange={handleChange} name="costDay" />
+                    <Form.Control type="number" placeholder="Enter cost per day" onChange={handleInputChange} name="costDay" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="cost3Day">
                     <Form.Label>Cost for 3 Days</Form.Label>
-                    <Form.Control type="number" placeholder="Enter cost for 3 days" onChange={handleChange} name="cost3Day" />
+                    <Form.Control type="number" placeholder="Enter cost for 3 days" onChange={handleInputChange} name="cost3Day" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="costWeek">
                     <Form.Label>Cost per Week</Form.Label>
-                    <Form.Control type="number" placeholder="Enter cost per week" onChange={handleChange} name="costWeek" />
+                    <Form.Control type="number" placeholder="Enter cost per week" onChange={handleInputChange} name="costWeek" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="transmission">
                     <Form.Label>Transmission</Form.Label>
-                    <Form.Select onChange={handleChange} name="transmission">
+                    <Form.Select onChange={handleSelectChange} name="transmission">
                         <option value="">Transmission</option>
                         <option value="Автомат">Автомат</option>
                         <option value="Механика">Механика</option>
@@ -159,14 +162,15 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter name" onChange={handleChange} name="name" />
+                    <Form.Control type="text" placeholder="Enter name" onChange={handleInputChange} name="name" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="year">
                     <Form.Label>Year</Form.Label>
-                    <Form.Control type="number" placeholder="Enter year" onChange={handleChange} name="year" />
+                    <Form.Control type="number" placeholder="Enter year" onChange={handleInputChange} name="year" />
                 </Form.Group>
-
+                {error && <ErrorAlert error={error} open={true} />}
+                {successMessage && <SuccessAlert message={successMessage} open={true} />}
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
