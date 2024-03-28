@@ -55,8 +55,8 @@ export async function getAllCars() {
 
 export async function createItem(itemData: any, photoPath: string) {
     try {
-        const { type, numberOfSeats, typeEngine, 
-            fuelRate, costDay, cost3Day, costWeek, 
+        const { type, numberOfSeats, typeEngine,
+            fuelRate, costDay, cost3Day, costWeek,
             transmission, name, year } = itemData;
 
         // Чтение байтов изображения из файла
@@ -114,3 +114,57 @@ export async function createItem(itemData: any, photoPath: string) {
         throw new Error('Error creating item');
     }
 }
+export const CarService = {
+    getCarById: async (carId: number) => {
+        const car = await prisma.car.findUnique({
+            where: {
+                id: carId,
+            },
+            include: {
+                type: {
+                    select: {
+                        type: true,
+                        numberOfSeats: true,
+                        typeEngine: true,
+                        fuelRate: true,
+                    },
+                },
+                tarif: {
+                    select: {
+                        costDay: true,
+                        cost3Day: true,
+                        costWeek: true,
+                    },
+                },
+                transmission: {
+                    select: {
+                        transmission: true,
+                    },
+                },
+                model: {
+                    select: {
+                        name: true,
+                        year: true,
+                    },
+                },
+            },
+        });
+
+        if (!car) {
+            return null;
+        }
+
+        return {
+            type: car.type.type,
+            numberOfSeats: car.type.numberOfSeats,
+            typeEngine: car.type.typeEngine,
+            fuelRate: car.type.fuelRate,
+            costDay: car.tarif.costDay,
+            cost3Day: car.tarif.cost3Day,
+            costWeek: car.tarif.costWeek,
+            transmission: car.transmission.transmission,
+            name: car.model.name,
+            year: car.model.year,
+        };
+    },
+};
