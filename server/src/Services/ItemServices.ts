@@ -147,6 +147,11 @@ export const CarService = {
                         year: true,
                     },
                 },
+                photo: {
+                    select: {
+                        photo: true
+                    }
+                }
             },
         });
 
@@ -165,6 +170,7 @@ export const CarService = {
             transmission: car.transmission.transmission,
             name: car.model.name,
             year: car.model.year,
+            photo: car.photo.photo
         };
     },
 };
