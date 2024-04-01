@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 const prisma = new PrismaClient();
 
-export async function getAllCars() {
+export async function getAllCarsService() {
     try {
         const cars = await prisma.car.findMany({
             include: {
@@ -53,7 +53,7 @@ export async function getAllCars() {
 }
 
 
-export async function createItem(itemData: any, photoPath: string) {
+export async function createItemService(itemData: any, photoPath: string) {
     try {
         const { type, numberOfSeats, typeEngine,
             fuelRate, costDay, cost3Day, costWeek,
@@ -114,63 +114,62 @@ export async function createItem(itemData: any, photoPath: string) {
         throw new Error('Error creating item');
     }
 }
-export const CarService = {
-    getCarById: async (carId: number) => {
-        const car = await prisma.car.findUnique({
-            where: {
-                id: carId,
+
+export const getCarByIdService = async (carId: number) => {
+    const car = await prisma.car.findUnique({
+        where: {
+            id: carId,
+        },
+        include: {
+            type: {
+                select: {
+                    type: true,
+                    numberOfSeats: true,
+                    typeEngine: true,
+                    fuelRate: true,
+                },
             },
-            include: {
-                type: {
-                    select: {
-                        type: true,
-                        numberOfSeats: true,
-                        typeEngine: true,
-                        fuelRate: true,
-                    },
+            tarif: {
+                select: {
+                    costDay: true,
+                    cost3Day: true,
+                    costWeek: true,
                 },
-                tarif: {
-                    select: {
-                        costDay: true,
-                        cost3Day: true,
-                        costWeek: true,
-                    },
+            },
+            transmission: {
+                select: {
+                    transmission: true,
                 },
-                transmission: {
-                    select: {
-                        transmission: true,
-                    },
+            },
+            model: {
+                select: {
+                    name: true,
+                    year: true,
                 },
-                model: {
-                    select: {
-                        name: true,
-                        year: true,
-                    },
-                },
-                photo: {
-                    select: {
-                        photo: true
-                    }
+            },
+            photo: {
+                select: {
+                    photo: true
                 }
-            },
-        });
+            }
+        },
+    });
 
-        if (!car) {
-            return null;
-        }
+    if (!car) {
+        return null;
+    }
 
-        return {
-            type: car.type.type,
-            numberOfSeats: car.type.numberOfSeats,
-            typeEngine: car.type.typeEngine,
-            fuelRate: car.type.fuelRate,
-            costDay: car.tarif.costDay,
-            cost3Day: car.tarif.cost3Day,
-            costWeek: car.tarif.costWeek,
-            transmission: car.transmission.transmission,
-            name: car.model.name,
-            year: car.model.year,
-            photo: car.photo.photo
-        };
-    },
+    return {
+        type: car.type.type,
+        numberOfSeats: car.type.numberOfSeats,
+        typeEngine: car.type.typeEngine,
+        fuelRate: car.type.fuelRate,
+        costDay: car.tarif.costDay,
+        cost3Day: car.tarif.cost3Day,
+        costWeek: car.tarif.costWeek,
+        transmission: car.transmission.transmission,
+        name: car.model.name,
+        year: car.model.year,
+        photo: car.photo.photo
+    };
 };

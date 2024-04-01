@@ -1,10 +1,10 @@
 // ItemController.ts
 import { Request, Response } from 'express';
-import { CarService, createItem, getAllCars } from '../Services/ItemServices';
+import { createItemService, getAllCarsService, getCarByIdService } from '../Services/ItemServices';
 
 export async function getAllCarsController(req: Request, res: Response) {
     try {
-        const cars = await getAllCars();
+        const cars = await getAllCarsService();
         res.json(cars);
     } catch (error) {
         console.error('Error fetching cars:', error);
@@ -26,7 +26,7 @@ export async function createItemController(req: Request, res: Response) {
 
         const photoPath = req.file.path;
 
-        const newItem = await createItem(req.body, photoPath);
+        const newItem = await createItemService(req.body, photoPath);
 
         res.status(201).json(newItem);
     } catch (error) {
@@ -34,18 +34,18 @@ export async function createItemController(req: Request, res: Response) {
         res.status(500).json({ error: 'Error creating item' });
     }
 }
-
+// В контроллере
 export const getCarById = async (req: Request, res: Response) => {
     const carId = parseInt(req.params.id);
   
     try {
-      const car = await CarService.getCarById(carId);
-      if (!car) {
-        return res.status(404).json({ error: 'Машина не найдена' });
-      }
-      res.json(car);
+        const car = await getCarByIdService(carId);
+        if (!car) {
+            return res.status(404).json({ error: 'Машина не найдена' });
+        }
+        res.json(car);
     } catch (error) {
-      console.error('Ошибка при получении данных о машине:', error);
-      res.status(500).json({ error: 'Ошибка сервера' });
+        console.error('Ошибка при получении данных о машине:', error);
+        res.status(500).json({ error: 'Ошибка сервера' });
     }
-  };
+};
