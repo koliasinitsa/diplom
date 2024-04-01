@@ -5,7 +5,7 @@ import { Car } from '../../interfaces/ItemCardProps';
 import Header from '../Header/Header';
 import { Button } from '@mui/material';
 import MyVerticallyCenteredModal from '../Modal/Modal';
-
+import Cookies from 'js-cookie';
 
 
 
@@ -13,7 +13,8 @@ const ItemPage: React.FC = () => {
   const [carInfo, setCarInfo] = useState<Car | null>(null);
   const { itemId } = useParams<string>();
   const [modalShow, setModalShow] = useState(false);
-  const carDetails = { itemId, name: carInfo?.name };
+  const [token, setToken] = useState();
+  const carDetails = { itemId, name: carInfo?.name, token };
 
   useEffect(() => {
     const fetchCarInfo = async () => {
@@ -27,6 +28,20 @@ const ItemPage: React.FC = () => {
 
     fetchCarInfo();
   }, [itemId]);
+
+  const openModal = () => {
+    setModalShow(true)
+    const token = Cookies.get('token');
+    if (token) {
+      try {
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));
+        setToken(decodedToken.userId)
+      } catch (error) {
+        // Обработка ошибок при декодировании токена
+        console.error('Error decoding token:', error);
+      }
+    }
+  }
 
   // Функция для преобразования массива чисел в строку Base64
   const arrayBufferToBase64 = (buffer: number[]) => {
@@ -64,7 +79,7 @@ const ItemPage: React.FC = () => {
               <p><strong>Transmission:</strong> {carInfo.transmission}</p>
               <p><strong>Year:</strong> {carInfo.year}</p>
               <div>
-                <Button variant="contained" color="success" onClick={() => setModalShow(true)}>Забронировать</Button>
+                <Button variant="contained" color="success" onClick={() => openModal()}>Забронировать</Button>
               </div>
             </div>
           </div>

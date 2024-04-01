@@ -29,7 +29,35 @@ app.use('/api', userRoutes);
 app.use('/api', profileRoutes);
 app.use('/api', ItemRoutes);
 
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
+// POST запрос для создания заказа айтема
+app.post('/orders', async (req: Request, res: Response) => {
+  try {
+    const { method, startDate, endDate, itemId, userId } = req.body;
+
+    // Создание заказа айтема
+    const order = await prisma.order.create({
+      data: {
+        user: { connect: { id: userId } },
+        car: { connect: { id: itemId } }, // Предполагается, что itemId соответствует ID машины
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        payment: {
+          create: {
+            method
+          }
+        }
+      }
+    });
+
+    res.json(order);
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: 'Could not create order' });
+  }
+});
 
 // Error handling middleware
 app.use((err: ErrorRequestHandler, req: express.Request, res: express.Response, next: express.NextFunction) => {

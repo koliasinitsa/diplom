@@ -61,20 +61,10 @@ model Order {
   //Payment Payments[]
 }
 
-// Определение типа перечисления "Method"
-enum Method {
-  credit_card
-  debit_card
-  charging
-  cash
-}
-
 // Определение модели для таблицы "payment"
 model Payment {
   id       Int      @id @default(autoincrement())
-  amount   Float
-  datePay  DateTime
-  method   Method
+  method   String
   orders     Order[] 
 }
 

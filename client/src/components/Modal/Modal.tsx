@@ -1,41 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import SuccessAlert from '../Alert/SuccessAlert';
+import ErrorAlert from '../Alert/ErrorAlert';
 
 interface ModalProps {
     show: boolean;
     onHide: () => void;
-    carDetails: { itemId: string | undefined; name: string | undefined };
+    carDetails: { itemId: string | undefined; name: string | undefined, token: any };
 }
 
 const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDetails }) => {
-    const [paymentMethod, setPaymentMethod] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [formData, setFormData] = useState({
+        paymentMethod: '',
+        startDate: '',
+        endDate: ''
+    });
+    const [successMessage, setSuccessMessage] = useState('');
+    const [error, setError] = useState('');
 
-    const handlePaymentMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPaymentMethod(e.target.value);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
-    const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStartDate(e.target.value);
-    };
+    const handleSubmit = async () => {
+        if (!formData.paymentMethod || !formData.startDate || !formData.endDate) {
+            setError('Пожалуйста, заполните все поля формы');
+            return; // Прерываем выполнение функции, чтобы запрос на сервер не отправлялся
+        }
+        // Собираем данные для отправки на сервер
+        const requestData = {
+            method: formData.paymentMethod,
+            startDate: formData.startDate,
+            endDate: formData.endDate,
+            itemId: parseInt(carDetails.itemId, 10),
+            userId: carDetails.token
+        };
+        try {
+            // Отправляем POST запрос на сервер
+            //const response = await axios.post('http://localhost:3000/orders', requestData);
 
-    const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEndDate(e.target.value);
-    };
-
-    const handleSubmit = () => {
-        
-        // Здесь можно отправить данные на сервер
-        console.log('Payment Method:', paymentMethod);
-        console.log('Start Date:', startDate);
-        console.log('End Date:', endDate);
-        console.log('id:', carDetails.itemId);
-
-        // Закрываем модальное окно после отправки данных
-        onHide();
+            //console.log('Order created successfully:', response.data);
+            setSuccessMessage('your order accepted')
+            setFormData({
+                paymentMethod: '',
+                startDate: '',
+                endDate: ''
+            });
+           // onHide(); // Закрываем модальное окно после успешного создания заказа
+        } catch (error) {
+            setError('Error');
+            console.error('Error creating order:', error);
+        }
     };
 
     return (
@@ -49,14 +72,20 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                Забронировать автомобиль {carDetails.name}
+                    Забронировать автомобиль {carDetails.name}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
+                <Form >
                     <Form.Group controlId="paymentMethod">
                         <Form.Label>Способ оплаты</Form.Label>
-                        <Form.Control as="select" onChange={handlePaymentMethodChange}>
+                        <Form.Control
+                            as="select"
+                            name="paymentMethod"
+                            value={formData.paymentMethod}
+                            onChange={handleChange}
+                        >
+                            <option value="">Способ оплаты</option>
                             <option value="credit_card">Кредитная карта</option>
                             <option value="debit_card">Дебетовая карта</option>
                             <option value="charging">Безналичный</option>
@@ -66,18 +95,30 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
                     <div className="mb-3"></div>
                     <Form.Group controlId="startDate">
                         <Form.Label>Дата начала поездки</Form.Label>
-                        <Form.Control type="date" onChange={handleStartDateChange} />
+                        <Form.Control
+                            type="date"
+                            name="startDate"
+                            value={formData.startDate}
+                            onChange={handleChange}
+                        />
                     </Form.Group>
                     <div className="mb-3"></div>
                     <Form.Group controlId="endDate">
                         <Form.Label>Дата окончания поездки</Form.Label>
-                        <Form.Control type="date" onChange={handleEndDateChange} />
+                        <Form.Control
+                            type="date"
+                            name="endDate"
+                            value={formData.endDate}
+                            onChange={handleChange}
+                        />
                     </Form.Group>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="warning" onClick={handleSubmit}>Отправить</Button>
             </Modal.Footer>
+            {error && <ErrorAlert error={error} open={true} />}
+            {successMessage && <SuccessAlert message={successMessage} open={true} />}
         </Modal>
     );
 };

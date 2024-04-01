@@ -4,9 +4,6 @@ CREATE TYPE "user_status" AS ENUM ('active', 'blocked');
 -- CreateEnum
 CREATE TYPE "user_role" AS ENUM ('user', 'admin');
 
--- CreateEnum
-CREATE TYPE "Method" AS ENUM ('credit_card', 'debit_card', 'charging', 'cash');
-
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
@@ -46,9 +43,7 @@ CREATE TABLE "Order" (
 -- CreateTable
 CREATE TABLE "Payment" (
     "id" SERIAL NOT NULL,
-    "amount" DOUBLE PRECISION NOT NULL,
-    "datePay" TIMESTAMP(3) NOT NULL,
-    "method" "Method" NOT NULL,
+    "method" TEXT NOT NULL,
 
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );
