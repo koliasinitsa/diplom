@@ -12,7 +12,6 @@ const ItemTable: React.FC = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/api/getAllCars')
             .then(response => {
-                console.log(response.data)
                 setItems(response.data);
             })
             .catch(error => {

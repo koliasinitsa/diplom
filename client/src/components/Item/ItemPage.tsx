@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Car } from '../../interfaces/ItemCardProps';
 import Header from '../Header/Header';
 import { Button } from '@mui/material';
+import MyVerticallyCenteredModal from '../Modal/Modal';
 
 
 
@@ -11,6 +12,8 @@ import { Button } from '@mui/material';
 const ItemPage: React.FC = () => {
   const [carInfo, setCarInfo] = useState<Car | null>(null);
   const { itemId } = useParams<string>();
+  const [modalShow, setModalShow] = useState(false);
+  const carDetails = { itemId, name: carInfo?.name };
 
   useEffect(() => {
     const fetchCarInfo = async () => {
@@ -61,7 +64,7 @@ const ItemPage: React.FC = () => {
               <p><strong>Transmission:</strong> {carInfo.transmission}</p>
               <p><strong>Year:</strong> {carInfo.year}</p>
               <div>
-                <Button variant="contained"  color="success">Забронировать</Button>
+                <Button variant="contained" color="success" onClick={() => setModalShow(true)}>Забронировать</Button>
               </div>
             </div>
           </div>
@@ -69,6 +72,10 @@ const ItemPage: React.FC = () => {
           <p style={{ fontSize: '20px', color: '#333' }}>Loading...</p>
         )}
       </div>
+      <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        carDetails={carDetails} />
     </div>
   );
 };
