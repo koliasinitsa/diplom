@@ -45,7 +45,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
         };
         try {
             // Отправляем POST запрос на сервер
-            const response = await axios.post('http://localhost:3000/orders', requestData);
+            const response = await axios.post('http://localhost:3000/api/createOrders', requestData);
 
             console.log('Order created successfully:', response.data);
             setSuccessMessage('your order accepted')
