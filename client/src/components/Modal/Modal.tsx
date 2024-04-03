@@ -1,4 +1,4 @@
-import React, { useState, useRef  } from 'react';
+import React, { useState  } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,7 @@ import ErrorAlert from '../Alert/ErrorAlert';
 interface ModalProps {
     show: boolean;
     onHide: () => void;
-    carDetails: { itemId: string | undefined; name: string | undefined, token: any };
+    carDetails: { itemId: string; name: string, token: any };
 }
 
 const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDetails }) => {
@@ -45,9 +45,9 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
         };
         try {
             // Отправляем POST запрос на сервер
-            //const response = await axios.post('http://localhost:3000/orders', requestData);
+            const response = await axios.post('http://localhost:3000/orders', requestData);
 
-            //console.log('Order created successfully:', response.data);
+            console.log('Order created successfully:', response.data);
             setSuccessMessage('your order accepted')
             setFormData({
                 paymentMethod: '',
@@ -56,7 +56,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
             });
            // onHide(); // Закрываем модальное окно после успешного создания заказа
         } catch (error) {
-            setError('Error');
+            setError('reservation already did');
             console.error('Error creating order:', error);
         }
     };
@@ -117,8 +117,8 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
             <Modal.Footer>
                 <Button variant="warning" onClick={handleSubmit}>Отправить</Button>
             </Modal.Footer>
-            {error && <ErrorAlert error={error} open={true} />}
-            {successMessage && <SuccessAlert message={successMessage} open={true} />}
+            {error && <ErrorAlert error={error}  />}
+            {successMessage && <SuccessAlert message={successMessage}  />}
         </Modal>
     );
 };
