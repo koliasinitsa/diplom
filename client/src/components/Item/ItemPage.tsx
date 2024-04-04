@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import { Button } from '@mui/material';
 import MyVerticallyCenteredModal from '../Modal/Modal';
 import Cookies from 'js-cookie';
+import SingleImageCarousel from '../Image/ImageCarousel';
 
 
 
@@ -56,12 +57,9 @@ const ItemPage: React.FC = () => {
         {carInfo ? (
           <div className="row">
             <div className="col-md-6">
-              <div style={{ width: '100%', height: '400px', backgroundColor: '#f0f0f0', position: 'relative', borderRadius: '10px' }}>
-                <img
-                  src={`data:image/jpeg;base64,${arrayBufferToBase64(carInfo.photo.data)}`}
-                  alt={`Image ${carInfo.name}`}
-                  className="img-fluid mb-3"
-                  style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '100%', maxHeight: '100%', objectFit: 'cover', borderRadius: '10px' }}
+              <div>
+                <SingleImageCarousel
+                  imageUrl={`data:image/jpeg;base64,${arrayBufferToBase64(carInfo.photo.data)}`}
                 />
               </div>
               <div className="d-flex mt-3">
