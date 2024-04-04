@@ -15,7 +15,10 @@ class UserService {
     const profile = await prisma.profile.findUnique({
       where: { userId: userId },
     });
-
+    // Удаление всех связанных записей из таблицы Order
+    await prisma.order.deleteMany({
+      where: { userId: userId },
+    });
     // Если профиль существует, удалим его
     if (profile) {
       await prisma.profile.delete({
