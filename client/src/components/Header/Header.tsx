@@ -15,7 +15,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
-import SearchPanel from './Search-panel/SearchPanel';
+// import SearchPanel from './Search-panel/SearchPanel';
 import LanguageSelector from './LanguageSelector';
 
 
@@ -79,9 +79,9 @@ const Header: React.FC = () => {
                         <HomeIcon />
                     </Link>
                     {/* Поисковая строка (слева) с ограниченной шириной */}
-                    <div style={{ maxWidth: '300px' }}>
+                    {/* <div style={{ maxWidth: '300px' }}>
                         <SearchPanel />
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Иконка смены цвета и языковой выбор */}
@@ -93,12 +93,20 @@ const Header: React.FC = () => {
                         <DarkModeIcon />
                     </IconButton> */}
                     {role === 'admin' && (
-                        <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
+                        <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
                             <Button variant="contained" color="success">
-                                Создать элемент
+                                пользователи
                             </Button>
                         </Link>
                     )}
+                    {role === 'admin' && (
+                        <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
+                            <Button variant="contained" color="success">
+                                Создать машину
+                            </Button>
+                        </Link>
+                    )}
+                   
                     <IconButton
                         color="inherit"
                         aria-label="language"
@@ -134,11 +142,11 @@ const Header: React.FC = () => {
                         <Link to="/MyProfile" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
                         </Link>
-                        {role === 'admin' && (
+                        {/* {role === 'admin' && (
                             <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <MenuItem>Users</MenuItem>
                             </Link>
-                        )}
+                        )} */}
                         <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
                     </Menu>
                 </div>
