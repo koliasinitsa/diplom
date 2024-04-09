@@ -9,7 +9,7 @@ import ErrorAlert from '../Alert/ErrorAlert';
 interface ModalProps {
     show: boolean;
     onHide: () => void;
-    carDetails: { itemId: string; name: string, token: any };
+    carDetails: { itemId: string; name: string, brand: string, token: any };
 }
 
 const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDetails }) => {
@@ -72,7 +72,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Забронировать автомобиль {carDetails.name}
+                    Забронировать автомобиль {carDetails.brand} {carDetails.name}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

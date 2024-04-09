@@ -15,6 +15,7 @@ const CreateItemForm = () => {
         cost3Day: 0,
         costWeek: 0,
         transmission: '',
+        brand: '',
         name: '',
         year: 0,
         images: null
@@ -160,6 +161,11 @@ const CreateItemForm = () => {
                     </Form.Select>
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="brand">
+                    <Form.Label>Brand</Form.Label>
+                    <Form.Control type="text" placeholder="Enter brand" onChange={handleInputChange} name="brand" />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter name" onChange={handleInputChange} name="name" />
@@ -169,8 +175,8 @@ const CreateItemForm = () => {
                     <Form.Label>Year</Form.Label>
                     <Form.Control type="number" placeholder="Enter year" onChange={handleInputChange} name="year" />
                 </Form.Group>
-                {error && <ErrorAlert error={error} open={true} />}
-                {successMessage && <SuccessAlert message={successMessage} open={true} />}
+                {error && <ErrorAlert error={error}  />}
+                {successMessage && <SuccessAlert message={successMessage}  />}
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>

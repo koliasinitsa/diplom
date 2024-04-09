@@ -16,13 +16,21 @@ CREATE TABLE "Users" (
 );
 
 -- CreateTable
+CREATE TABLE "Citizenship" (
+    "id" SERIAL NOT NULL,
+    "citizenship" TEXT NOT NULL,
+
+    CONSTRAINT "Citizenship_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Profile" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "citizenship" TEXT NOT NULL,
+    "citizenshipId" INTEGER NOT NULL,
     "residence" TEXT NOT NULL,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
@@ -63,7 +71,7 @@ CREATE TABLE "Car" (
 -- CreateTable
 CREATE TABLE "Type" (
     "id" SERIAL NOT NULL,
-    "type" TEXT NOT NULL,
+    "typeId" INTEGER NOT NULL,
     "numberOfSeats" DOUBLE PRECISION NOT NULL,
     "typeEngine" TEXT NOT NULL,
     "fuelRate" DOUBLE PRECISION NOT NULL,
@@ -72,12 +80,29 @@ CREATE TABLE "Type" (
 );
 
 -- CreateTable
+CREATE TABLE "TypeCar" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "TypeCar_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Model" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "year" DOUBLE PRECISION NOT NULL,
+    "brandId" INTEGER NOT NULL,
 
     CONSTRAINT "Model_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Brand" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Brand_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -116,10 +141,13 @@ CREATE UNIQUE INDEX "Users_password_key" ON "Users"("password");
 CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Order_userId_key" ON "Order"("userId");
+CREATE UNIQUE INDEX "Profile_citizenshipId_key" ON "Profile"("citizenshipId");
 
 -- AddForeignKey
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_citizenshipId_fkey" FOREIGN KEY ("citizenshipId") REFERENCES "Citizenship"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -144,3 +172,9 @@ ALTER TABLE "Car" ADD CONSTRAINT "Car_modelId_fkey" FOREIGN KEY ("modelId") REFE
 
 -- AddForeignKey
 ALTER TABLE "Car" ADD CONSTRAINT "Car_photoId_fkey" FOREIGN KEY ("photoId") REFERENCES "Photo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Type" ADD CONSTRAINT "Type_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "TypeCar"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Model" ADD CONSTRAINT "Model_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "Brand"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

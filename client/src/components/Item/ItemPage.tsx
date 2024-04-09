@@ -15,7 +15,7 @@ const ItemPage: React.FC = () => {
   const { itemId } = useParams<string>();
   const [modalShow, setModalShow] = useState(false);
   const [token, setToken] = useState();
-  const carDetails = { itemId, name: carInfo?.name, token };
+  const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
 
   useEffect(() => {
     const fetchCarInfo = async () => {
@@ -69,7 +69,7 @@ const ItemPage: React.FC = () => {
               </div>
             </div>
             <div className="col-md-6">
-              <h2 className="mb-3" style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{carInfo.name}</h2>
+              <h2 className="mb-3" style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{carInfo.brand} {carInfo.name}</h2>
               <p><strong>Type:</strong> {carInfo.type}</p>
               <p><strong>Number of Seats:</strong> {carInfo.numberOfSeats}</p>
               <p><strong>Engine Type:</strong> {carInfo.typeEngine}</p>

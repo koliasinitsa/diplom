@@ -10,7 +10,11 @@ export async function getAllCarsService() {
             include: {
                 type: {
                     select: {
-                        type: true,
+                        typeCar: {
+                            select : {
+                                name: true
+                            }
+                        }
                     },
                 },
                 tarif: {
@@ -26,6 +30,11 @@ export async function getAllCarsService() {
                 model: {
                     select: {
                         name: true,
+                        brand: {
+                            select : {
+                                name: true
+                            }
+                        }
                     },
                 },
                 photo: {
@@ -38,9 +47,10 @@ export async function getAllCarsService() {
 
         const formattedCars = cars.map(car => ({
             id: car.id,
-            type: car.type.type,
+            type: car.type.typeCar.name,
             costDay: car.tarif.costDay,
             transmission: car.transmission.transmission,
+            brand: car.model.brand.name,
             name: car.model.name,
             photo: car.photo.photo
         }));
@@ -57,7 +67,7 @@ export async function createItemService(itemData: any, photoPath: string) {
     try {
         const { type, numberOfSeats, typeEngine,
             fuelRate, costDay, cost3Day, costWeek,
-            transmission, name, year } = itemData;
+            transmission, name, year, brand, typeCar } = itemData;
 
         // Чтение байтов изображения из файла
         const photoData = await fs.promises.readFile(photoPath);
@@ -66,11 +76,15 @@ export async function createItemService(itemData: any, photoPath: string) {
             data: {
                 type: {
                     create: {
-                        type,
                         numberOfSeats: parseFloat(numberOfSeats),
                         typeEngine,
                         fuelRate: parseFloat(fuelRate),
-                    },
+                        typeCar: {
+                            create: {
+                                name: type
+                            }
+                        }
+                    }
                 },
                 tarif: {
                     create: {
@@ -88,6 +102,11 @@ export async function createItemService(itemData: any, photoPath: string) {
                     create: {
                         name,
                         year: parseFloat(year),
+                        brand: {
+                            create: {
+                                name: brand
+                            }
+                        }
                     },
                 },
                 photo: {
@@ -123,10 +142,14 @@ export const getCarByIdService = async (carId: number) => {
         include: {
             type: {
                 select: {
-                    type: true,
                     numberOfSeats: true,
                     typeEngine: true,
                     fuelRate: true,
+                    typeCar: {
+                        select: {
+                            name: true,
+                        },
+                    }
                 },
             },
             tarif: {
@@ -145,6 +168,11 @@ export const getCarByIdService = async (carId: number) => {
                 select: {
                     name: true,
                     year: true,
+                    brand: {
+                        select: {
+                            name: true,
+                        },
+                    },
                 },
             },
             photo: {
@@ -160,7 +188,7 @@ export const getCarByIdService = async (carId: number) => {
     }
 
     return {
-        type: car.type.type,
+        typeCar: car.type.typeCar.name,
         numberOfSeats: car.type.numberOfSeats,
         typeEngine: car.type.typeEngine,
         fuelRate: car.type.fuelRate,
@@ -168,6 +196,7 @@ export const getCarByIdService = async (carId: number) => {
         cost3Day: car.tarif.cost3Day,
         costWeek: car.tarif.costWeek,
         transmission: car.transmission.transmission,
+        brand: car.model.brand.name,
         name: car.model.name,
         year: car.model.year,
         photo: car.photo.photo

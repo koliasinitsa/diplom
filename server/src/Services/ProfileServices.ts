@@ -40,6 +40,7 @@ class ProfileServices {
                 return newProfile;
             }
         } catch (error) {
+            console.log('errrrr', error)
             throw new Error(`Error creating or updating profile: ${error}`);
         }
     }

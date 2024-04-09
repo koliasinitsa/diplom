@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
-    const { id, name, transmission, type, costDay, photo } = item;
+    const { id, name, transmission, type, costDay, photo, brand } = item;
 
     // Преобразование массива чисел (буфера) в строку Base64
     const imageData = `data:image/jpeg;base64,${arrayBufferToBase64(photo.data)}`;
@@ -27,7 +27,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
                 )}
             </div>
             <Card.Body>
-                <Card.Title>{name}</Card.Title>
+                <Card.Title>{brand} {name}</Card.Title>
                 <Card.Text style={{ marginBottom: '5px' }}>
                     <strong>Transmission:</strong> {transmission}
                 </Card.Text>

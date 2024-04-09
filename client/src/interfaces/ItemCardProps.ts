@@ -1,6 +1,7 @@
 export interface ItemCardProps {
     item: {
         id: number;
+        brand: string
         name: string;
         transmission: string;
         type: string;
@@ -14,6 +15,7 @@ export interface ItemCardProps {
 
 export interface Item {
     id: number;
+    brand: string
     name: string;
     transmission: string;
     type: string;
@@ -34,6 +36,7 @@ export interface Car {
     cost3Day: number;
     costWeek: number;
     transmission: string;
+    brand: string
     name: string;
     year: number;
     photo: { type: string, data: number[] }; // Тип изображения "Buffer"
@@ -48,6 +51,7 @@ export interface CreateCar {
     cost3Day: number;
     costWeek: number;
     transmission: string;
+    brand: string
     name: string;
     year: number;
     images: File | null;
