@@ -66,7 +66,7 @@ export async function getAllCarsService() {
 export async function createItemService(itemData: any, photoPath: string) {
     try {
         const { type, numberOfSeats, typeEngine,
-            fuelRate, costDay, cost3Day, costWeek,
+            fuelRate, costDay, cost3Day, costWeek, costMonth,
             transmission, name, year, brand, typeCar } = itemData;
 
         // Чтение байтов изображения из файла
@@ -91,6 +91,7 @@ export async function createItemService(itemData: any, photoPath: string) {
                         costDay: parseFloat(costDay),
                         cost3Day: parseFloat(cost3Day),
                         costWeek: parseFloat(costWeek),
+                        costMonth: parseFloat(costMonth),
                     },
                 },
                 transmission: {
@@ -157,6 +158,7 @@ export const getCarByIdService = async (carId: number) => {
                     costDay: true,
                     cost3Day: true,
                     costWeek: true,
+                    costMonth: true
                 },
             },
             transmission: {
@@ -195,6 +197,7 @@ export const getCarByIdService = async (carId: number) => {
         costDay: car.tarif.costDay,
         cost3Day: car.tarif.cost3Day,
         costWeek: car.tarif.costWeek,
+        costMonth: car.tarif.costMonth,
         transmission: car.transmission.transmission,
         brand: car.model.brand.name,
         name: car.model.name,

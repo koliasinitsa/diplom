@@ -14,6 +14,7 @@ const CreateItemForm = () => {
         costDay: 0,
         cost3Day: 0,
         costWeek: 0,
+        costMonth: 0,
         transmission: '',
         brand: '',
         name: '',
@@ -148,6 +149,11 @@ const CreateItemForm = () => {
                 <Form.Group className="mb-3" controlId="costWeek">
                     <Form.Label>Cost per Week</Form.Label>
                     <Form.Control type="number" placeholder="Enter cost per week" onChange={handleInputChange} name="costWeek" />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="costMonth">
+                    <Form.Label>Cost per Month</Form.Label>
+                    <Form.Control type="number" placeholder="Enter cost per Month" onChange={handleInputChange} name="costMonth" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="transmission">

@@ -35,6 +35,7 @@ export interface Car {
     costDay: number;
     cost3Day: number;
     costWeek: number;
+    costMonth: number,
     transmission: string;
     brand: string
     name: string;
@@ -50,6 +51,7 @@ export interface CreateCar {
     costDay: number;
     cost3Day: number;
     costWeek: number;
+    costMonth: number,
     transmission: string;
     brand: string
     name: string;

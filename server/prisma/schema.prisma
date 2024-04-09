@@ -34,12 +34,7 @@ model Users {
   // Каждый пользователь имеет один профиль
 }
 
-model Citizenship {
-  id  Int      @id @default(autoincrement())
-  citizenship  String
 
-  profile    Profile?
-}
 
 // Профиль принадлежит конкретному пользователю
 model Profile {
@@ -49,8 +44,6 @@ model Profile {
   name         String
   last_name    String
   phone        String
-  citizenship  Citizenship @relation(fields: [citizenshipId], references: [id])
-  citizenshipId Int  @unique
   residence    String
 }
 
@@ -135,6 +128,7 @@ model Tarif {
   costDay   Float
   cost3Day  Float
   costWeek  Float
+  costMonth  Float
 
   cars      Car[]
 }

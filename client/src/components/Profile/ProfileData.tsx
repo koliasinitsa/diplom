@@ -42,7 +42,6 @@ const ProfileData: React.FC<ProfileDataProps> = ({ UserId }) => { // Прини�
           <p><strong>Name:</strong> {profileData?.name || NoData}</p>
           <p><strong>Last Name:</strong> {profileData?.last_name || NoData}</p>
           <p><strong>Phone:</strong> {profileData?.phone || NoData}</p>
-          <p><strong>Citizenship:</strong> {profileData?.citizenship || NoData}</p>
           <p><strong>Residence:</strong> {profileData?.residence || NoData}</p>
         </div>
       </div>

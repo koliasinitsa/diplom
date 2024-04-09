@@ -16,21 +16,12 @@ CREATE TABLE "Users" (
 );
 
 -- CreateTable
-CREATE TABLE "Citizenship" (
-    "id" SERIAL NOT NULL,
-    "citizenship" TEXT NOT NULL,
-
-    CONSTRAINT "Citizenship_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Profile" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "citizenshipId" INTEGER NOT NULL,
     "residence" TEXT NOT NULL,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
@@ -111,6 +102,7 @@ CREATE TABLE "Tarif" (
     "costDay" DOUBLE PRECISION NOT NULL,
     "cost3Day" DOUBLE PRECISION NOT NULL,
     "costWeek" DOUBLE PRECISION NOT NULL,
+    "costMonth" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Tarif_pkey" PRIMARY KEY ("id")
 );
@@ -140,14 +132,8 @@ CREATE UNIQUE INDEX "Users_password_key" ON "Users"("password");
 -- CreateIndex
 CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Profile_citizenshipId_key" ON "Profile"("citizenshipId");
-
 -- AddForeignKey
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Profile" ADD CONSTRAINT "Profile_citizenshipId_fkey" FOREIGN KEY ("citizenshipId") REFERENCES "Citizenship"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

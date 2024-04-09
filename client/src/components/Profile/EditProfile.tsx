@@ -15,7 +15,6 @@ const EditProfile: React.FC = () => {
     name: '',
     last_name: '',
     phone: '',
-    citizenship: '',
     residence: ''
   });
   const [editable, setEditable] = useState(false);
@@ -102,19 +101,10 @@ const EditProfile: React.FC = () => {
               disabled={!editable}
             />
           </Form.Group>
-          {error && <ErrorAlert error={error} open={true} />}
-          {successMessage && <SuccessAlert message={successMessage} open={true} />}
+          {error && <ErrorAlert error={error}  />}
+          {successMessage && <SuccessAlert message={successMessage}  />}
 
-          <Form.Group className='mt-3' controlId="formCountry">
-            <Form.Label>{t('Country')}</Form.Label>
-            <Form.Control
-              type="text"
-              name="citizenship"
-              value={userData?.citizenship || ''}
-              onChange={handleInputChange}
-              disabled={!editable}
-            />
-          </Form.Group>
+          
 
           <Form.Group className='mt-3' controlId="formAddress">
             <Form.Label>{t('Address')}</Form.Label>

@@ -66,6 +66,7 @@ const ItemPage: React.FC = () => {
                 <p className="mb-1 me-3" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost per Day: ${carInfo.costDay}</p>
                 <p className="mb-1 me-3" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost for 3 Days: ${carInfo.cost3Day}</p>
                 <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost per Week: ${carInfo.costWeek}</p>
+                <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost per Month: ${carInfo.costMonth}</p>
               </div>
             </div>
             <div className="col-md-6">
