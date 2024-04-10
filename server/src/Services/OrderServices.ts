@@ -30,45 +30,46 @@ export const createOrderServices = async (
 };
 export async function getAllOrdersService() {
   try {
-      const orders = await prisma.order.findMany({
-          include: {
-              user: {
-                  select: {
-                      email: true
-                  }
-              },
-              car: {
-                  select: {
-                      model: {
-                          select: {
-                              brand: {
-                                  select: {
-                                      name: true
-                                  }
-                              },
-                              name: true
-                          }
-                      }
-                  }
-              },
-              payment: {
-                  select: {
-                      method: true
-                  }
-              }
+    const orders = await prisma.order.findMany({
+      include: {
+        user: {
+          select: {
+            email: true
           }
-      });
+        },
+        car: {
+          select: {
+            model: {
+              select: {
+                brand: {
+                  select: {
+                    name: true
+                  }
+                },
+                name: true
+              }
+            }
+          }
+        },
+        payment: {
+          select: {
+            method: true
+          }
+        }
+      }
+    });
 
-      return orders.map(order => ({
-          userEmail: order.user.email,
-          startDate: order.startDate,
-          endDate: order.endDate,
-          paymentMethod: order.payment.method,
-          carBrand: order.car.model.brand.name,
-          carModel: order.car.model.name
-      }));
+    return orders.map(order => ({
+      id: order.id,
+      userEmail: order.user.email,
+      startDate: order.startDate,
+      endDate: order.endDate,
+      paymentMethod: order.payment.method,
+      carBrand: order.car.model.brand.name,
+      carModel: order.car.model.name
+    }));
   } catch (error) {
-      console.error('Error fetching orders:', error);
-      throw new Error('Error fetching orders');
+    console.error('Error fetching orders:', error);
+    throw new Error('Error fetching orders');
   }
 }

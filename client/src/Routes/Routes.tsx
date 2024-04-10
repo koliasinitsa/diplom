@@ -11,6 +11,7 @@ import EditProfile from '../components/Profile/EditProfile';
 import UserProfilePage from '../components/UsersTable/UserProfilePage';
 import ItemPage from '../components/Item/ItemPage';
 import CreateItemForm from '../components/Item/CreateItemForm';
+import OrderTable from '../components/Order/OrderTable';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -28,6 +29,8 @@ const AppRoutes: React.FC = () => {
       
       <Route path="/ItemPage/:itemId" element={<ItemPage />} />
       <Route path="/CreateItemForm" element={<CreateItemForm />} />
+
+      <Route path="/OrderTable" element={<OrderTable />} />
     </Routes>
   );
 };
