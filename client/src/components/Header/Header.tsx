@@ -17,10 +17,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 // import SearchPanel from './Search-panel/SearchPanel';
 import LanguageSelector from './LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 
 
 const Header: React.FC = () => {
+    const { t } = useTranslation();
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -95,21 +97,21 @@ const Header: React.FC = () => {
                     {role === 'admin' && (
                         <Link to="/OrderTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
                             <Button variant="contained" color="success">
-                                Заказы
+                                {t('Orders')}
                             </Button>
                         </Link>
                     )}
                     {role === 'admin' && (
                         <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
                             <Button variant="contained" color="success">
-                                пользователи
+                                {t('User')}
                             </Button>
                         </Link>
                     )}
                     {role === 'admin' && (
                         <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
                             <Button variant="contained" color="success">
-                                Создать машину
+                                {t('Create car')}
                             </Button>
                         </Link>
                     )}

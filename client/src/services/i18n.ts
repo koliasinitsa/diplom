@@ -3,6 +3,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import translationEN from '../assets/translation.en.json';
 import translationRU from '../assets/translation.ru.json';
+import translationBel from '../assets/translation.bel.json';
 
 i18n
   .use(initReactI18next)
@@ -13,6 +14,9 @@ i18n
       },
       ru: {
         translation: translationRU,
+      },
+      bel: {
+        translation: translationBel,
       },
     },
     lng: 'ru',

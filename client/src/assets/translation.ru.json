@@ -13,5 +13,13 @@
   "Role": "Роль",
   "userNameToken": "Имя пользователя",
   "userEmailToken": "Почта",
-  "userRoleToken": "Роль"
+  "userRoleToken": "Роль",
+  "Start Date": "Дата старта",
+  "End Date": "Дата конца",
+  "Payment Method": "Способ оплаты",
+  "Car Brand": "Марка ",
+  "Car Model": "Модель ",
+  "Create car": "Создать автомобиль",
+  "User": "Пользователь",
+  "Orders": "Заказы"
 }

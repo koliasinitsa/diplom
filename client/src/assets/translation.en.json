@@ -13,5 +13,13 @@
   "Role": "Role",
   "userNameToken": "User name",
   "userEmailToken": "Email",
-  "userRoleToken": "Role"
+  "userRoleToken": "Role",
+  "Start Date": "Start Date",
+  "End Date": "End Date",
+  "Payment Method": "Payment Method",
+  "Car Brand": "Car Brand",
+  "Car Model": "Car Model",
+  "Create car": "Create car",
+  "User": "User",
+  "Orders": "Orders"
 }

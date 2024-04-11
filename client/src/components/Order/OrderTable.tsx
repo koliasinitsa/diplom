@@ -4,9 +4,11 @@ import OrderItem from './OrderItem';
 import axios from 'axios';
 import Header from '../Header/Header';
 import { Order } from '../../interfaces/order';
+import { useTranslation } from 'react-i18next';
 
 
 const OrdersTable: React.FC = () => {
+    const { t } = useTranslation();
     const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
     const [orders, setOrders] = useState<Order[]>([]);
 
@@ -55,12 +57,12 @@ const OrdersTable: React.FC = () => {
                                     onChange={(e) => handleSelectAll(e)}
                                 />
                             </TableCell>
-                            <TableCell>User Email</TableCell>
-                            <TableCell>Start Date</TableCell>
-                            <TableCell>End Date</TableCell>
-                            <TableCell>Payment Method</TableCell>
-                            <TableCell>Car Brand</TableCell>
-                            <TableCell>Car Model</TableCell>
+                            <TableCell>{t('Email')}</TableCell>
+                            <TableCell>{t('Start Date')}</TableCell>
+                            <TableCell>{t('End Date')}</TableCell>
+                            <TableCell>{t('Payment Method')}</TableCell>
+                            <TableCell>{t('Car Brand')}</TableCell>
+                            <TableCell>{t('Car Model')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

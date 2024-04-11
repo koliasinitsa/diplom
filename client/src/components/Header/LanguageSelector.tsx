@@ -42,6 +42,7 @@ const LanguageSelector: React.FC = () => {
       >
         <MenuItem onClick={() => handleLanguageChange('en')}>Eng</MenuItem>
         <MenuItem onClick={() => handleLanguageChange('ru')}>Rus</MenuItem>
+        <MenuItem onClick={() => handleLanguageChange('bel')}>Bel</MenuItem>
       </Menu>
     </div>
     );
