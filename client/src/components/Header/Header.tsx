@@ -93,6 +93,13 @@ const Header: React.FC = () => {
                         <DarkModeIcon />
                     </IconButton> */}
                     {role === 'admin' && (
+                        <Link to="/OrderTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
+                            <Button variant="contained" color="success">
+                                Заказы
+                            </Button>
+                        </Link>
+                    )}
+                    {role === 'admin' && (
                         <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
                             <Button variant="contained" color="success">
                                 пользователи
