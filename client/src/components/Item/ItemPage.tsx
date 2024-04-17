@@ -7,15 +7,14 @@ import { Button } from '@mui/material';
 import MyVerticallyCenteredModal from '../Modal/Modal';
 import Cookies from 'js-cookie';
 import SingleImageCarousel from '../Image/ImageCarousel';
-
-
+import { useTranslation } from 'react-i18next';
 
 const ItemPage: React.FC = () => {
+  const { t } = useTranslation();
   const [carInfo, setCarInfo] = useState<Car | null>(null);
   const { itemId } = useParams<string>();
   const [modalShow, setModalShow] = useState(false);
-  const [token, setToken] = useState();
-  const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const fetchCarInfo = async () => {
@@ -28,23 +27,30 @@ const ItemPage: React.FC = () => {
     };
 
     fetchCarInfo();
-  }, [itemId]);
 
-  const openModal = () => {
-    setModalShow(true)
     const token = Cookies.get('token');
     if (token) {
       try {
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        setToken(decodedToken.userId)
+        setIsAuthenticated(!!decodedToken.userId);
       } catch (error) {
-        // Обработка ошибок при декодировании токена
         console.error('Error decoding token:', error);
       }
     }
-  }
+  }, [itemId]);
 
-  // Функция для преобразования массива чисел в строку Base64
+  const openModal = () => {
+    setModalShow(true);
+  };
+
+  const renderButton = () => {
+    if (isAuthenticated) {
+      return <Button variant="contained" color="success" onClick={() => openModal()}>{t('Book')}</Button>;
+    } else {
+      return <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>{t('Signintobook')}</p>;
+    }
+  };
+
   const arrayBufferToBase64 = (buffer: number[]) => {
     const binary = buffer.map(byte => String.fromCharCode(byte)).join('');
     return btoa(binary);
@@ -77,9 +83,7 @@ const ItemPage: React.FC = () => {
               <p><strong>Fuel Rate:</strong> {carInfo.fuelRate}/100л</p>
               <p><strong>Transmission:</strong> {carInfo.transmission}</p>
               <p><strong>Year:</strong> {carInfo.year}</p>
-              <div>
-                <Button variant="contained" color="success" onClick={() => openModal()}>Забронировать</Button>
-              </div>
+              <div>{renderButton()}</div>
             </div>
           </div>
         ) : (
@@ -89,7 +93,8 @@ const ItemPage: React.FC = () => {
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        carDetails={carDetails} />
+        carDetails={carInfo ? { itemId, brand: carInfo.brand, name: carInfo.name } : { itemId, brand: '', name: '' }}
+      />
     </div>
   );
 };
