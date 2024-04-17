@@ -13,8 +13,10 @@ const ItemPage: React.FC = () => {
   const { t } = useTranslation();
   const [carInfo, setCarInfo] = useState<Car | null>(null);
   const { itemId } = useParams<string>();
+  const [token, setToken] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
 
   useEffect(() => {
     const fetchCarInfo = async () => {
@@ -33,6 +35,7 @@ const ItemPage: React.FC = () => {
       try {
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
         setIsAuthenticated(!!decodedToken.userId);
+        setToken(decodedToken.userId)
       } catch (error) {
         console.error('Error decoding token:', error);
       }
@@ -93,8 +96,7 @@ const ItemPage: React.FC = () => {
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        carDetails={carInfo ? { itemId, brand: carInfo.brand, name: carInfo.name } : { itemId, brand: '', name: '' }}
-      />
+        carDetails={carDetails} />
     </div>
   );
 };
