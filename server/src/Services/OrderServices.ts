@@ -73,3 +73,30 @@ export async function getAllOrdersService() {
     throw new Error('Error fetching orders');
   }
 }
+
+export async function deleteOrderService(orderId: number) {
+  const order = await prisma.order.findUnique({
+    where: {
+      id: orderId,
+    },
+    include: {
+      payment: true,
+    },
+  });
+
+  if (!order) {
+    throw new Error('Order not found');
+  }
+
+  await prisma.order.delete({
+    where: {
+      id: orderId,
+    },
+  });
+
+  await prisma.payment.delete({
+    where: {
+      id: order.paymentId,
+    },
+  });
+}
