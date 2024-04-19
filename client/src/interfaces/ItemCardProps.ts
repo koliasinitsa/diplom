@@ -29,6 +29,7 @@ export interface Item {
 
 export interface Car {
     type: string;
+    typeCar:string;
     numberOfSeats: number;
     typeEngine: string;
     fuelRate: number;
@@ -45,6 +46,7 @@ export interface Car {
 
 export interface CreateCar {
     type: string;
+    typeCar:string;
     numberOfSeats: number;
     typeEngine: string;
     fuelRate: number;

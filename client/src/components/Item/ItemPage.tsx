@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../interfaces/ItemCardProps';
 import Header from '../Header/Header';
 import { Button } from '@mui/material';
+import ButtonBS from 'react-bootstrap/Button';
+
 import MyVerticallyCenteredModal from '../Modal/Modal';
 import Cookies from 'js-cookie';
 import SingleImageCarousel from '../Image/ImageCarousel';
 import { useTranslation } from 'react-i18next';
+import { Modal } from 'react-bootstrap';
 
 const ItemPage: React.FC = () => {
   const { t } = useTranslation();
@@ -16,8 +19,11 @@ const ItemPage: React.FC = () => {
   const [token, setToken] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
   const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Состояние для отслеживания видимости модального окна удаления
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchCarInfo = async () => {
       try {
@@ -36,6 +42,7 @@ const ItemPage: React.FC = () => {
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
         setIsAuthenticated(!!decodedToken.userId);
         setToken(decodedToken.userId)
+        setRole(decodedToken.role);
       } catch (error) {
         console.error('Error decoding token:', error);
       }
@@ -44,6 +51,14 @@ const ItemPage: React.FC = () => {
 
   const openModal = () => {
     setModalShow(true);
+  };
+  const openDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const closeModal = () => {
+    setModalShow(false);
+    setShowDeleteModal(false);
   };
 
   const renderButton = () => {
@@ -57,6 +72,18 @@ const ItemPage: React.FC = () => {
   const arrayBufferToBase64 = (buffer: number[]) => {
     const binary = buffer.map(byte => String.fromCharCode(byte)).join('');
     return btoa(binary);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/ItemRoutes/cars/${itemId}`);
+      console.log(itemId)
+      navigate('/');
+      closeModal(); // Закрываем модальное окно после успешного удаления
+      // Дополнительные действия после удаления, например, перенаправление на другую страницу
+    } catch (error) {
+      console.error('Error deleting car:', error);
+    }
   };
 
   return (
@@ -80,13 +107,20 @@ const ItemPage: React.FC = () => {
             </div>
             <div className="col-md-6">
               <h2 className="mb-3" style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{carInfo.brand} {carInfo.name}</h2>
-              <p><strong>Type:</strong> {carInfo.type}</p>
+              <p><strong>Type:</strong> {carInfo.typeCar}</p>
               <p><strong>Number of Seats:</strong> {carInfo.numberOfSeats}</p>
               <p><strong>Engine Type:</strong> {carInfo.typeEngine}</p>
               <p><strong>Fuel Rate:</strong> {carInfo.fuelRate}/100л</p>
               <p><strong>Transmission:</strong> {carInfo.transmission}</p>
               <p><strong>Year:</strong> {carInfo.year}</p>
-              <div>{renderButton()}</div>
+              <div>
+                {renderButton()}
+                {role === 'admin' && (
+                  <Button style={{ marginLeft: '10px' }} variant="contained" color="error" onClick={() => openDeleteModal()}>
+                    {t('Deleted')}
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         ) : (
@@ -97,6 +131,21 @@ const ItemPage: React.FC = () => {
         show={modalShow}
         onHide={() => setModalShow(false)}
         carDetails={carDetails} />
+
+      <Modal show={showDeleteModal} onHide={() => closeModal()} style={{ marginTop: '100px' }} backdrop="static">
+        
+        <Modal.Body>
+          <p style={{ fontSize: '20px',  color: '#333' }} >{t('Are you sure you want to delete')} <strong> {carInfo?.brand} {carInfo?.name}? </strong>  </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonBS variant="secondary" onClick={() => closeModal()}>
+            {t('Cancel')}
+          </ButtonBS>
+          <ButtonBS variant="warning" onClick={handleDelete}>
+            {t('Deleted')}
+          </ButtonBS>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
