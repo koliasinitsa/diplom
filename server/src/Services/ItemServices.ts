@@ -11,7 +11,7 @@ export async function getAllCarsService() {
                 type: {
                     select: {
                         typeCar: {
-                            select : {
+                            select: {
                                 name: true
                             }
                         }
@@ -31,7 +31,7 @@ export async function getAllCarsService() {
                     select: {
                         name: true,
                         brand: {
-                            select : {
+                            select: {
                                 name: true
                             }
                         }
@@ -205,3 +205,48 @@ export const getCarByIdService = async (carId: number) => {
         photo: car.photo.photo
     };
 };
+
+export async function deleteCarService(carId: number) {
+    try {
+        const car = await prisma.car.findUnique({
+            where: { id: carId },
+            include: {
+                photo: true,
+                transmission: true,
+                model: { include: { brand: true } },
+                type: { include: { typeCar: true } },
+            },
+        });
+
+        if (!car) {
+            throw new Error('Машина не найдена');
+        }
+
+        const orders = await prisma.order.findMany({
+            where: { carId: carId },
+        });
+
+        await Promise.all(orders.map(async (order) => {
+            await prisma.order.delete({ where: { id: order.id } });
+        }));
+
+        await prisma.car.delete({ where: { id: carId } });
+
+        await prisma.photo.delete({ where: { id: car.photo.id } });
+
+        await prisma.transmission.delete({ where: { id: car.transmission.id } });
+
+        await prisma.tarif.delete({ where: { id: car.tarifId } });
+
+        await prisma.model.delete({ where: { id: car.modelId } });
+        await prisma.brand.delete({ where: { id: car.model.brandId } });
+
+        await prisma.type.delete({ where: { id: car.typeId } });
+        await prisma.typeCar.delete({ where: { id: car.type.typeId } });
+
+        return { success: true, message: 'Машина и все связанные элементы успешно удалены' };
+    } catch (error) {
+        console.error('Ошибка при удалении машины:', error);
+        return { success: false, message: 'Ошибка сервера' };
+    }
+}

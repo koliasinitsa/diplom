@@ -1,6 +1,6 @@
 // ItemController.ts
 import { Request, Response } from 'express';
-import { createItemService, getAllCarsService, getCarByIdService } from '../Services/ItemServices';
+import { createItemService, deleteCarService, getAllCarsService, getCarByIdService } from '../Services/ItemServices';
 
 export async function getAllCarsController(req: Request, res: Response) {
     try {
@@ -37,7 +37,7 @@ export async function createItemController(req: Request, res: Response) {
 // В контроллере
 export const getCarById = async (req: Request, res: Response) => {
     const carId = parseInt(req.params.id);
-  
+
     try {
         const car = await getCarByIdService(carId);
         if (!car) {
@@ -49,3 +49,15 @@ export const getCarById = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 };
+
+export async function deleteCarController(req: Request, res: Response) {
+    const carId = parseInt(req.params.id);
+
+    const result = await deleteCarService(carId);
+
+    if (result.success) {
+        return res.status(200).json({ message: result.message });
+    } else {
+        return res.status(500).json({ message: result.message });
+    }
+}
