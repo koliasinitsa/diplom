@@ -25,11 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/api', userRoutes);
-app.use('/api', profileRoutes);
-app.use('/api', ItemRoutes);
-app.use('/api', OrderRoutes);
+app.use('/authRoutes', authRoutes);
+app.use('/userRoutes', userRoutes);
+app.use('/profileRoutes', profileRoutes);
+app.use('/ItemRoutes', ItemRoutes);
+app.use('/OrderRoutes', OrderRoutes);
 
 
 // Error handling middleware

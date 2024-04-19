@@ -7,7 +7,7 @@ const API_BASE_URL = 'http://localhost:3000';
 // Получение всех пользователей
 export const getAllUsers = async (): Promise<User[]> => {
     try {
-        const response: AxiosResponse<User[]> = await axios.get(`${API_BASE_URL}/api/users`);
+        const response: AxiosResponse<User[]> = await axios.get(`${API_BASE_URL}/userRoutes/users`);
         return response.data;
     } catch (error) {
         console.error('Error fetching all users:', error);
@@ -19,7 +19,7 @@ export const getAllUsers = async (): Promise<User[]> => {
 export const deleteUser = async (userIds: number[]): Promise<void> => {
     try {
         for (const userId of userIds) {
-            await axios.delete(`${API_BASE_URL}/api/users/${userId}`);
+            await axios.delete(`${API_BASE_URL}/userRoutes/users/${userId}`);
         }
     } catch (error) {
         console.error('Error deleting users:', error);
@@ -31,7 +31,7 @@ export const deleteUser = async (userIds: number[]): Promise<void> => {
 export const blockUser = async (userIds: number[]): Promise<void> => {
     try {
         for (const userId of userIds) {
-            await axios.put(`${API_BASE_URL}/api/users/block/${userId}`);
+            await axios.put(`${API_BASE_URL}/userRoutes/users/block/${userId}`);
         }
     } catch (error) {
         console.error('Error blocking users:', error);
@@ -43,7 +43,7 @@ export const blockUser = async (userIds: number[]): Promise<void> => {
 export const unblockUser = async (userIds: number[]): Promise<void> => {
     try {
         for (const userId of userIds) {
-            await axios.put(`${API_BASE_URL}/api/users/unblock/${userId}`);
+            await axios.put(`${API_BASE_URL}/userRoutes/users/unblock/${userId}`);
         }
     } catch (error) {
         console.error('Error unblocking users:', error);
@@ -55,7 +55,7 @@ export const unblockUser = async (userIds: number[]): Promise<void> => {
 export const addAdmin = async (userIds: number[]): Promise<void> => {
     try {
         for (const userId of userIds) {
-            await axios.put(`${API_BASE_URL}/api/users/add-admin/${userId}`);
+            await axios.put(`${API_BASE_URL}/userRoutes/users/add-admin/${userId}`);
         }
     } catch (error) {
         console.error('Error adding admin role to users:', error);
@@ -67,7 +67,7 @@ export const addAdmin = async (userIds: number[]): Promise<void> => {
 export const removeAdmin = async (userIds: number[]): Promise<void> => {
     try {
         for (const userId of userIds) {
-            await axios.put(`${API_BASE_URL}/api/users/remove-admin/${userId}`);
+            await axios.put(`${API_BASE_URL}/userRoutes/users/remove-admin/${userId}`);
         }
     } catch (error) {
         console.error('Error removing admin role from users:', error);

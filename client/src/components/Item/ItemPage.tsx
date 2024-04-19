@@ -21,7 +21,7 @@ const ItemPage: React.FC = () => {
   useEffect(() => {
     const fetchCarInfo = async () => {
       try {
-        const response = await axios.get<Car>(`http://localhost:3000/api/getCarById/${itemId}`);
+        const response = await axios.get<Car>(`http://localhost:3000/ItemRoutes/getCarById/${itemId}`);
         setCarInfo(response.data);
       } catch (error) {
         console.error('Error fetching car info:', error);

@@ -71,7 +71,7 @@ const CreateItemForm = () => {
             }
             // надо сделать проверку на заполяемость формы, чтобы все были выбранны
             // очищение формы, и алерты вывод
-            const response = await axios.post('http://localhost:3000/api/createCars', formDataToSend);
+            const response = await axios.post('http://localhost:3000/ItemRoutes/createCars', formDataToSend);
             setSuccessMessage(response.statusText)
             formRef.current?.reset();
         } catch (error) {

@@ -12,7 +12,7 @@ const apiClient = axios.create({
 
 export const registerUser = async (email: string, password: string) => {
   try {
-    const response = await apiClient.post('/auth/register', { email, password });
+    const response = await apiClient.post('/authRoutes/register', { email, password });
     return response.data;
   } catch (error: any) {
     throw error.response.data;
@@ -21,7 +21,7 @@ export const registerUser = async (email: string, password: string) => {
 
 export const loginUser = async (email: string, password: string) => {
   try {
-    const response = await apiClient.post('/auth/login', { email, password });
+    const response = await apiClient.post('/authRoutes/login', { email, password });
     // Получение токена из ответа сервера
     const { token } = response.data.user;
     // Сохранение токена в куках
