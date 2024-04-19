@@ -60,7 +60,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
             console.error('Error creating order:', error);
         }
     };
-
+    
     return (
         <Modal
             show={show}
