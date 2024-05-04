@@ -8,12 +8,14 @@ import { getAllUsers, deleteUser, blockUser, unblockUser, addAdmin, removeAdmin 
 import SuccessAlert from '../Alert/SuccessAlert';
 // import ErrorAlert from '../Alert/ErrorAlert';
 import UserItem from './UserItem';
+import Spinner from '../Spinner/Spinner';
 
 const UsersTable: React.FC = () => {
   const { t } = useTranslation();
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Загрузка данных пользователей при монтировании компонента
   useEffect(() => {
@@ -21,6 +23,7 @@ const UsersTable: React.FC = () => {
       try {
         const fetchedUsers: User[] = await getAllUsers();
         setUsers(fetchedUsers);
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -67,7 +70,12 @@ const UsersTable: React.FC = () => {
     setUsers(updatedUsers);
   };
 
+  if (loading) {
+    return <Spinner/>   
+  }
+  
   return (
+    
     <div>
       <Header />
       <div className='container'>
@@ -75,7 +83,8 @@ const UsersTable: React.FC = () => {
           <Button variant="contained" color="primary" sx={{ marginRight: '10px' }} onClick={() => handleAction(addAdmin, 'User added to admin', 'Error adding users to admin')}>
             {t('addToAdmin')}
           </Button>
-          {alertMessage && <SuccessAlert message={alertMessage} open={true} />}
+          
+          {alertMessage && <SuccessAlert message={alertMessage}  />}
           <Button variant="contained" color="error" sx={{ marginRight: '10px' }} onClick={() => handleAction(removeAdmin, 'User removed from admin', 'Error removing users from admin')}>
             {t('deleteFromAdmin')}
           </Button>

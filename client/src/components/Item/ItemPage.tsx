@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 import SingleImageCarousel from '../Image/ImageCarousel';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'react-bootstrap';
+import Spinner from '../Spinner/Spinner';
 
 const ItemPage: React.FC = () => {
   const { t } = useTranslation();
@@ -23,12 +24,14 @@ const ItemPage: React.FC = () => {
   const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Состояние для отслеживания видимости модального окна удаления
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     const fetchCarInfo = async () => {
       try {
         const response = await axios.get<Car>(`http://localhost:3000/ItemRoutes/getCarById/${itemId}`);
         setCarInfo(response.data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching car info:', error);
       }
@@ -85,6 +88,10 @@ const ItemPage: React.FC = () => {
       console.error('Error deleting car:', error);
     }
   };
+
+  if (loading) {
+    return <Spinner/>   
+  }
 
   return (
     <div className='App'>

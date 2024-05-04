@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow, Checkbox, Button } from '@mui/material';
 import OrderItem from './OrderItem';
-import axios from 'axios';
+
 import Header from '../Header/Header';
 import { Order } from '../../interfaces/order';
 import { useTranslation } from 'react-i18next';
 import { deleteOrders, getAllOrders } from '../../services/OrderServices';
-
+import Spinner from '../Spinner/Spinner';
 
 const OrdersTable: React.FC = () => {
     const { t } = useTranslation();
     const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
     const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchOrders();
@@ -21,6 +22,7 @@ const OrdersTable: React.FC = () => {
         try {
             const response = await getAllOrders();
             setOrders(response);
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
@@ -54,6 +56,10 @@ const OrdersTable: React.FC = () => {
             console.error('Error deleting orders:', error);
         }
     };
+
+    if (loading) {
+        return <Spinner />
+    }
 
     return (
         <div>
