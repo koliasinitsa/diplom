@@ -37,6 +37,7 @@ const RegistrationForm: React.FC = () => {
     <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}>
       <form onSubmit={handleSubmit}>
         <Grid container direction="column" spacing={2}>
+        <Typography variant="h5"  style={{ marginBottom: '5px', marginLeft: '150px', marginTop: '20px' }}>Registration</Typography>
           <Grid item>
             <TextField
               label="Email"
@@ -67,8 +68,8 @@ const RegistrationForm: React.FC = () => {
               fullWidth
             />
           </Grid>
-          {error && <ErrorAlert error={error} open={true} />}
-          {successMessage && <SuccessAlert message={successMessage} open={true} />}
+          {error && <ErrorAlert error={error} />}
+          {successMessage && <SuccessAlert message={successMessage}  />}
           <Grid item>
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Зарегистрироваться

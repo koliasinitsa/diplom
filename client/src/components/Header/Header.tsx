@@ -96,21 +96,24 @@ const Header: React.FC = () => {
                     </IconButton> */}
                     {role === 'admin' && (
                         <Link to="/OrderTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
-                            <Button variant="contained" color="success">
+                            <Button variant="contained" color="success"
+                            style={{ width: '100px', height: '40px' }}>
                                 {t('Orders')}
                             </Button>
                         </Link>
                     )}
                     {role === 'admin' && (
                         <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
-                            <Button variant="contained" color="success">
+                            <Button variant="contained" color="success"
+                            style={{ width: '140px', height: '40px' }}>
                                 {t('User')}
                             </Button>
                         </Link>
                     )}
                     {role === 'admin' && (
                         <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
-                            <Button variant="contained" color="success">
+                            <Button variant="contained" color="success"
+                            style={{ width: '220px', height: '40px' }}>
                                 {t('Create car')}
                             </Button>
                         </Link>

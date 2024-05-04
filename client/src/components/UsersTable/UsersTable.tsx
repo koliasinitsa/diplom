@@ -80,21 +80,21 @@ const UsersTable: React.FC = () => {
       <Header />
       <div className='container'>
         <div style={{ marginTop: '100px' }}>
-          <Button variant="contained" color="primary" sx={{ marginRight: '10px' }} onClick={() => handleAction(addAdmin, 'User added to admin', 'Error adding users to admin')}>
+          <Button variant="contained" color="primary" sx={{ width: '250px', marginRight: '10px' }} onClick={() => handleAction(addAdmin, 'User added to admin', 'Error adding users to admin')}>
             {t('addToAdmin')}
           </Button>
           
           {alertMessage && <SuccessAlert message={alertMessage}  />}
-          <Button variant="contained" color="error" sx={{ marginRight: '10px' }} onClick={() => handleAction(removeAdmin, 'User removed from admin', 'Error removing users from admin')}>
+          <Button variant="contained" color="error" sx={{ width: '250px', marginRight: '10px' }} onClick={() => handleAction(removeAdmin, 'User removed from admin', 'Error removing users from admin')}>
             {t('deleteFromAdmin')}
           </Button>
-          <Button variant="contained" color="warning" sx={{ marginRight: '10px' }} onClick={() => handleAction(blockUser, 'User blocked', 'Error blocking users')}>
+          <Button variant="contained" color="warning" sx={{ width: '140px', marginRight: '10px' }} onClick={() => handleAction(blockUser, 'User blocked', 'Error blocking users')}>
             {t('Blocked')}
           </Button>
-          <Button variant="contained" color="primary" sx={{ marginRight: '10px' }} onClick={() => handleAction(unblockUser, 'User unblocked', 'Error unblocking users')}>
+          <Button variant="contained" color="primary" sx={{ width: '160px', marginRight: '10px' }} onClick={() => handleAction(unblockUser, 'User unblocked', 'Error unblocking users')}>
             {t('UnBlocked')}
           </Button>
-          <Button variant="contained" color="error" onClick={() => handleAction(deleteUser, 'User deleted', 'Error deleting users')}>
+          <Button variant="contained" color="error" sx={{ width: '100px', marginRight: '10px' }} onClick={() => handleAction(deleteUser, 'User deleted', 'Error deleting users')}>
             {t('Deleted')}
           </Button>
         </div>
@@ -108,9 +108,9 @@ const UsersTable: React.FC = () => {
                   onChange={(e) => handleSelectAll(e)}
                 />
               </TableCell>
-              <TableCell>{t('Email')}</TableCell>
-              <TableCell>{t('Status')}</TableCell>
-              <TableCell>{t('Role')}</TableCell>
+              <TableCell style={{width: '300px'}}>{t('Email')}</TableCell>
+              <TableCell style={{width: '300px'}}>{t('Status')}</TableCell>
+              <TableCell style={{width: '300px'}}>{t('Role')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

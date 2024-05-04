@@ -65,7 +65,8 @@ const OrdersTable: React.FC = () => {
         <div>
             <Header />
             <div className='container' style={{ marginTop: '90px' }}>
-                <Button variant="contained" color="error" onClick={handleDeleteSelectedOrders}>
+                <Button variant="contained" color="error" onClick={handleDeleteSelectedOrders}
+                style={{ width: '100px', height: '40px' }}>
                     {t('Deleted')}
                 </Button>
                 <Table style={{ marginTop: '30px' }}>
@@ -78,12 +79,12 @@ const OrdersTable: React.FC = () => {
                                     onChange={(e) => handleSelectAll(e)}
                                 />
                             </TableCell>
-                            <TableCell>{t('Email')}</TableCell>
-                            <TableCell>{t('Start Date')}</TableCell>
-                            <TableCell>{t('End Date')}</TableCell>
-                            <TableCell>{t('Payment Method')}</TableCell>
-                            <TableCell>{t('Car Brand')}</TableCell>
-                            <TableCell>{t('Car Model')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('Email')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('Start Date')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('End Date')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('Payment Method')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('Car Brand')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('Car Model')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

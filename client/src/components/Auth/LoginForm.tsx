@@ -26,9 +26,11 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}>
+        <div>
+            <Box sx={{ maxWidth: 400, mx: 'auto', mt: 20 }}>
             <form onSubmit={handleSubmit}>
-                <Grid container direction="column" spacing={2}>
+                <Grid container direction="column"  spacing={2}>
+                <Typography variant="h5"  style={{ marginBottom: '5px', marginLeft: '180px', marginTop: '20px' }}>Login</Typography>
                     <Grid item>
                         <TextField
                             label="Email"
@@ -49,7 +51,7 @@ const LoginForm: React.FC = () => {
                             fullWidth
                         />
                     </Grid>
-                    {error && <ErrorAlert error={error} open={true} />}
+                    {error && <ErrorAlert error={error}  />}
                     <Grid item>
                         <Button type="submit" variant="contained" color="primary" fullWidth>
                             Войти
@@ -63,6 +65,7 @@ const LoginForm: React.FC = () => {
                 </Grid>
             </form>
         </Box>
+        </div>
     );
 };
 
