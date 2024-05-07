@@ -23,6 +23,7 @@
   "User": "User",
   "Orders": "Orders",
   "Book": "Book",
+  "Spravka": "inquiry",
   "Signintobook": "Sign in to book",
   "Are you sure you want to delete": "Are you sure you want to delete"
 }
