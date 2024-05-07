@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../interfaces/ItemCardProps';
 import Header from '../Header/Header';
 import { Button } from '@mui/material';
@@ -25,7 +25,7 @@ const ItemPage: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Состояние для отслеживания видимости модального окна удаления
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     const fetchCarInfo = async () => {
       try {
@@ -68,7 +68,7 @@ const ItemPage: React.FC = () => {
     if (isAuthenticated) {
       return <Button variant="contained" color="success" onClick={() => openModal()}>{t('Book')}</Button>;
     } else {
-      return <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>{t('Signintobook')}</p>;
+      return <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#333',width: '100px' }}>{t('Signintobook')}</p>;
     }
   };
 
@@ -90,7 +90,7 @@ const ItemPage: React.FC = () => {
   };
 
   if (loading) {
-    return <Spinner/>   
+    return <Spinner />
   }
 
   return (
@@ -123,9 +123,17 @@ const ItemPage: React.FC = () => {
               <div>
                 {renderButton()}
                 {role === 'admin' && (
-                  <Button style={{ marginLeft: '10px' }} variant="contained" color="error" onClick={() => openDeleteModal()}>
+                  <Button style={{ marginLeft: '10px', width: '100px' }} variant="contained" color="error" onClick={() => openDeleteModal()}>
                     {t('Deleted')}
                   </Button>
+                )}
+                {role === 'admin' && (
+                  <Link to="/EditItemForm" style={{ textDecoration: 'none', color: 'inherit', marginLeft: '10px' }}>
+                    <Button variant="contained" color="secondary"
+                      style={{ width: '100px', height: '40px' }}>
+                      {t('EditItemForm')}
+                    </Button>
+                  </Link>
                 )}
               </div>
             </div>
@@ -140,9 +148,9 @@ const ItemPage: React.FC = () => {
         carDetails={carDetails} />
 
       <Modal show={showDeleteModal} onHide={() => closeModal()} style={{ marginTop: '100px' }} backdrop="static">
-        
+
         <Modal.Body>
-          <p style={{ fontSize: '20px',  color: '#333' }} >{t('Are you sure you want to delete')} <strong> {carInfo?.brand} {carInfo?.name}? </strong>  </p>
+          <p style={{ fontSize: '20px', color: '#333' }} >{t('Are you sure you want to delete')} <strong> {carInfo?.brand} {carInfo?.name}? </strong>  </p>
         </Modal.Body>
         <Modal.Footer>
           <ButtonBS variant="secondary" onClick={() => closeModal()}>

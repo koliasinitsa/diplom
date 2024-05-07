@@ -13,6 +13,7 @@ import ItemPage from '../components/Item/ItemPage';
 import CreateItemForm from '../components/Item/CreateItemForm';
 import OrderTable from '../components/Order/OrderTable';
 import { Spravka } from '../assets/spravka/spravka';
+import { EditItemForm } from '../components/Item/EditItemForm';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const AppRoutes: React.FC = () => {
       
       <Route path="/ItemPage/:itemId" element={<ItemPage />} />
       <Route path="/CreateItemForm" element={<CreateItemForm />} />
+      <Route path="/EditItemForm" element={<EditItemForm />} />
 
       <Route path="/OrderTable" element={<OrderTable />} />
 
