@@ -127,14 +127,14 @@ const ItemPage: React.FC = () => {
                     {t('Deleted')}
                   </Button>
                 )}
-                {role === 'admin' && (
+                {/* {role === 'admin' && (
                   <Link to="/EditItemForm" style={{ textDecoration: 'none', color: 'inherit', marginLeft: '10px' }}>
                     <Button variant="contained" color="secondary"
                       style={{ width: '100px', height: '40px' }}>
                       {t('EditItemForm')}
                     </Button>
                   </Link>
-                )}
+                )} */}
               </div>
             </div>
           </div>
