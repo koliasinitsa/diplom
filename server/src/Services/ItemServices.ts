@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 const prisma = new PrismaClient();
 
-export async function getAllCarsService() {
+export async function getAllCarsService(skip = 0, pageSize = 6) {
     try {
         const cars = await prisma.car.findMany({
             include: {
@@ -43,6 +43,8 @@ export async function getAllCarsService() {
                     }
                 }
             },
+            skip,
+            take: pageSize,
         });
 
         const formattedCars = cars.map(car => ({
@@ -113,6 +115,7 @@ export async function createItemService(itemData: any, photoPath: string) {
                 photo: {
                     create: {
                         photo: photoData,
+                        photoUrl: `name${name}`,
                     },
                 }
             },

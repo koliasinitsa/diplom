@@ -145,6 +145,7 @@ model Transmission {
 model Photo {
   id      Int    @id @default(autoincrement())
   photo  Bytes
+  photoUrl String
   
   cars      Car[]
 }

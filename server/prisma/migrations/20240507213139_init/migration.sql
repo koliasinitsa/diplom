@@ -119,6 +119,7 @@ CREATE TABLE "Transmission" (
 CREATE TABLE "Photo" (
     "id" SERIAL NOT NULL,
     "photo" BYTEA NOT NULL,
+    "photoUrl" TEXT NOT NULL,
 
     CONSTRAINT "Photo_pkey" PRIMARY KEY ("id")
 );

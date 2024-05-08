@@ -94,11 +94,11 @@ const Header: React.FC = () => {
                     >
                         <DarkModeIcon />
                     </IconButton> */}
-                    <Link to="/Spravka" style={{ textDecoration: 'none', color: 'inherit', marginRight: '600px' }}>
+                    {/* <Link to="/Spravka" style={{ textDecoration: 'none', color: 'inherit', marginRight: '200px' }}>
                     <Button variant="contained" color="secondary">
                                 {t('Spravka')}
                             </Button>
-                    </Link>
+                    </Link> */}
                     {role === 'admin' && (
                         <Link to="/OrderTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
                             <Button variant="contained" color="success"

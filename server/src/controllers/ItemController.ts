@@ -4,7 +4,12 @@ import { createItemService, deleteCarService, getAllCarsService, getCarByIdServi
 
 export async function getAllCarsController(req: Request, res: Response) {
     try {
-        const cars = await getAllCarsService();
+        const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber as string) : 1;
+        const pageSize = req.query.pageSize ? parseInt(req.query.pageSize as string) : 6;
+
+        const skip = (pageNumber - 1) * pageSize;
+
+        const cars = await getAllCarsService(skip, pageSize);
         res.json(cars);
     } catch (error) {
         console.error('Error fetching cars:', error);
@@ -15,9 +20,6 @@ export async function getAllCarsController(req: Request, res: Response) {
 
 export async function createItemController(req: Request, res: Response) {
     try {
-        const { type, numberOfSeats, typeEngine,
-            fuelRate, costDay, cost3Day, costWeek,
-            transmission, name, year } = req.body;
 
         // Проверяем наличие загруженного файла
         if (!req.file) {
