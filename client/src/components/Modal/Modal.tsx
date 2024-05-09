@@ -10,11 +10,11 @@ import { Car } from '../../interfaces/ItemCardProps';
 interface ModalProps {
     show: boolean;
     onHide: () => void;
-    carinfo: Car; // Объект carInfo
+    carinfo: Car; 
     token: any;
 }
 
-const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo, token }) => { // Переименовываем carinfo в carInfo
+const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo, token }) => { 
     const [formData, setFormData] = useState({
         paymentMethod: '',
         startDate: '',
@@ -23,7 +23,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
     const [successMessage, setSuccessMessage] = useState('');
     const [error, setError] = useState('');
     const [daysCount, setDaysCount] = useState<number>(0);
-    const [rentalCost, setRentalCost] = useState<number>(0); // Состояние для хранения суммы аренды
+    const [rentalCost, setRentalCost] = useState<number>(0); 
 
     const calculateDays = () => {
         const startDate = new Date(formData.startDate);
@@ -96,7 +96,6 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
         try {
             setSuccessMessage('')
             setError('');
-            // Отправляем POST запрос на сервер
             console.log('reqwqwe',requestData)
             const response = await axios.post('http://localhost:3000/OrderRoutes/createOrders', requestData);
 
