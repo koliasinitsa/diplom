@@ -14,6 +14,7 @@ import CreateItemForm from '../components/Item/CreateItemForm';
 import OrderTable from '../components/Order/OrderTable';
 import { Spravka } from '../assets/spravka/spravka';
 import { EditItemForm } from '../components/Item/EditItemForm';
+import MyOrder from '../components/Order/MyOrder';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/EditItemForm" element={<EditItemForm />} />
 
       <Route path="/OrderTable" element={<OrderTable />} />
+      <Route path="/MyOrder" element={<MyOrder />} />
 
       <Route path="/Spravka" element={<Spravka />} />
     </Routes>

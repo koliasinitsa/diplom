@@ -1,6 +1,6 @@
 // controllers/orderController.ts
 import { Request, Response } from 'express';
-import { createOrderServices, deleteOrderService, getAllOrdersService } from '../Services/OrderServices';
+import { createOrderServices, deleteOrderService, getAllOrdersService, getOrdersByIdUserService } from '../Services/OrderServices';
 
 export const createOrderController = async (req: Request, res: Response) => {
   try {
@@ -18,6 +18,17 @@ export const createOrderController = async (req: Request, res: Response) => {
 export async function getAllOrdersController(req: Request, res: Response) {
   try {
     const orders = await getAllOrdersService();
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ error: 'Error fetching orders' });
+  }
+}
+
+export async function getOrdersByIdUserController(req: Request, res: Response) {
+  try {
+    const userId = parseInt(req.params.userId);
+    const orders = await getOrdersByIdUserService(userId);
     res.json(orders);
   } catch (error) {
     console.error('Error fetching orders:', error);

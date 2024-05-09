@@ -159,6 +159,9 @@ const Header: React.FC = () => {
                         <Link to="/MyProfile" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
                         </Link>
+                        <Link to="/MyOrder" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <MenuItem onClick={handleCloseUserMenu}>My Order</MenuItem>
+                        </Link>
                         {/* {role === 'admin' && (
                             <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <MenuItem>Users</MenuItem>

@@ -81,6 +81,59 @@ export async function getAllOrdersService() {
   }
 }
 
+export async function getOrdersByIdUserService(userId: number) {
+  try {
+    const orders = await prisma.order.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        user: {
+          select: {
+            email: true
+          }
+        },
+        car: {
+          select: {
+            model: {
+              select: {
+                brand: {
+                  select: {
+                    name: true
+                  }
+                },
+                name: true
+              }
+            }
+          }
+        },
+        payment: {
+          select: {
+            method: true,
+            daysCount: true,
+            rentalCost: true
+          }
+        }
+      }
+    });
+
+    return orders.map(order => ({
+      id: order.id,
+      userEmail: order.user.email,
+      startDate: order.startDate,
+      endDate: order.endDate,
+      paymentMethod: order.payment.method,
+      daysCount: order.payment.daysCount,
+      rentalCost: order.payment.rentalCost,
+      carBrand: order.car.model.brand.name,
+      carModel: order.car.model.name
+    }));
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    throw new Error('Error fetching orders');
+  }
+}
+
 export async function deleteOrderService(orderId: number) {
   const order = await prisma.order.findUnique({
     where: {

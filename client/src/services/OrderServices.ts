@@ -11,6 +11,15 @@ export const getAllOrders = async () => {
         throw new Error('Failed getall order');
     }
 }
+export const getByIdUserOrders = async (userId: number) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/OrderRoutes/ByIdUserOrders/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error getall order:', error);
+        throw new Error('Failed getall order');
+    }
+}
 
 export const deleteOrders = async (selectedOrders: number[]) => {
     try {
