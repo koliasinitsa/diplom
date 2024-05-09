@@ -42,20 +42,20 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
             itemId: parseInt(carDetails.itemId, 10),
             userId: carDetails.token
         };
-        setSuccessMessage('')
         try {
+            setSuccessMessage('')
             setError('');
             // Отправляем POST запрос на сервер
             const response = await axios.post('http://localhost:3000/OrderRoutes/createOrders', requestData);
 
-            //console.log('Order created successfully:', response.data);
+            console.log('Order created successfully:', response.data);
             setSuccessMessage('your order accepted')
             setFormData({
                 paymentMethod: '',
                 startDate: '',
                 endDate: ''
             });
-            setSuccessMessage('')
+            
            // onHide(); // Закрываем модальное окно после успешного создания заказа
         } catch (error) {
             setError('reservation already did');
