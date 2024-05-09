@@ -4,9 +4,9 @@ import { createOrderServices, deleteOrderService, getAllOrdersService } from '..
 
 export const createOrderController = async (req: Request, res: Response) => {
   try {
-    const { method, startDate, endDate, itemId, userId } = req.body;
+    const { method, startDate, endDate, itemId, userId, daysCount, rentalCost } = req.body;
 
-    const order = await createOrderServices(method, new Date(startDate), new Date(endDate), itemId, userId);
+    const order = await createOrderServices(method, new Date(startDate), new Date(endDate), itemId, userId, daysCount, rentalCost);
 
     res.json(order);
   } catch (error) {

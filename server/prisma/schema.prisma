@@ -66,6 +66,8 @@ model Order {
 model Payment {
   id       Int      @id @default(autoincrement())
   method   String
+  daysCount Int?
+  rentalCost Int?
   orders     Order[] 
 }
 

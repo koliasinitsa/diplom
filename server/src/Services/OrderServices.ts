@@ -6,7 +6,8 @@ const prisma = new PrismaClient();
 export const createOrderServices = async (
   method: string,
   startDate: Date, endDate: Date,
-  itemId: number, userId: number
+  itemId: number, userId: number,
+  daysCount: number, rentalCost: number
 ) => {
   try {
     const order = await prisma.order.create({
@@ -17,7 +18,9 @@ export const createOrderServices = async (
         endDate,
         payment: {
           create: {
-            method
+            method,
+            daysCount,
+            rentalCost
           }
         }
       }
@@ -53,7 +56,9 @@ export async function getAllOrdersService() {
         },
         payment: {
           select: {
-            method: true
+            method: true,
+            daysCount: true,
+            rentalCost: true
           }
         }
       }
@@ -65,6 +70,8 @@ export async function getAllOrdersService() {
       startDate: order.startDate,
       endDate: order.endDate,
       paymentMethod: order.payment.method,
+      daysCount: order.payment.daysCount,
+      rentalCost: order.payment.rentalCost,
       carBrand: order.car.model.brand.name,
       carModel: order.car.model.name
     }));
