@@ -9,6 +9,7 @@ import SuccessAlert from '../Alert/SuccessAlert';
 // import ErrorAlert from '../Alert/ErrorAlert';
 import UserItem from './UserItem';
 import Spinner from '../Spinner/Spinner';
+import ErrorAlert from '../Alert/ErrorAlert';
 
 const UsersTable: React.FC = () => {
   const { t } = useTranslation();
@@ -16,6 +17,9 @@ const UsersTable: React.FC = () => {
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
+
 
   // Загрузка данных пользователей при монтировании компонента
   useEffect(() => {
@@ -43,6 +47,7 @@ const UsersTable: React.FC = () => {
       setSelectedUsers([]);
     }
   };
+  
 // Мемоизированная функция для выбора пользователей
   const handleSelectUser = useCallback(
     (userId: number) => {
@@ -54,13 +59,16 @@ const UsersTable: React.FC = () => {
   );
 // Функция для выполнения действий над пользователями
   const handleAction = async (action: Function, successMessage: string, errorMessage: string) => {
+    setSuccessMessage('');
+    setError('');
     try {
       // Вызов функции которую передали с кнопки
       await action(selectedUsers);
-      setAlertMessage(successMessage);
+      
+      setSuccessMessage(successMessage);
       updateUsers();
     } catch (error) {
-      setAlertMessage(errorMessage);
+      setError(errorMessage);
       console.error(errorMessage, error);
     }
   };
@@ -83,8 +91,8 @@ const UsersTable: React.FC = () => {
           <Button variant="contained" color="primary" sx={{ width: '250px', marginRight: '10px' }} onClick={() => handleAction(addAdmin, 'User added to admin', 'Error adding users to admin')}>
             {t('addToAdmin')}
           </Button>
-          
-          {alertMessage && <SuccessAlert message={alertMessage}  />}
+          {error && <ErrorAlert error={error}  />}
+          {successMessage && <SuccessAlert message={successMessage}  />}
           <Button variant="contained" color="error" sx={{ width: '250px', marginRight: '10px' }} onClick={() => handleAction(removeAdmin, 'User removed from admin', 'Error removing users from admin')}>
             {t('deleteFromAdmin')}
           </Button>

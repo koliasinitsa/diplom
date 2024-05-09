@@ -46,6 +46,7 @@ const CreateItemForm = () => {
         e.preventDefault();
 
         try {
+            setSuccessMessage('')
             const formDataToSend = new FormData();
             if (formData.images) {
                 formDataToSend.append('images', formData.images); // Добавляем файл изображения

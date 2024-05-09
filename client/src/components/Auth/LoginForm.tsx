@@ -15,10 +15,11 @@ const LoginForm: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
+            setError('');
             await loginUser(email, password);
             setEmail('');
             setPassword('');
-            setError('');
+            
             navigate('/');
         } catch (error: any) {
             setError(error.error);
@@ -51,7 +52,7 @@ const LoginForm: React.FC = () => {
                             fullWidth
                         />
                     </Grid>
-                    {error && <ErrorAlert error={error}  />}
+                     {error && <ErrorAlert error={error}  />}
                     <Grid item>
                         <Button type="submit" variant="contained" color="primary" fullWidth>
                             Войти

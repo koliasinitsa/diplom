@@ -14,22 +14,21 @@ const RegistrationForm: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
     // Проверка на совпадение паролей
     if (password !== confirmPassword) {
       setError('Пароли не совпадают');
       return;
     }
     try {
+      setError('');
       const response = await registerUser(email, password);
       setEmail('');
       setPassword('');
-      setError('');
       setConfirmPassword('');
       setSuccessMessage(response.message)
     } catch (error: any) {
       setError(error.error);
-    }
+    } 
 
   };
 
