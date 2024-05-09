@@ -28,6 +28,7 @@ export interface Item {
 
 
 export interface Car {
+    carId: number,
     type: string;
     typeCar:string;
     numberOfSeats: number;

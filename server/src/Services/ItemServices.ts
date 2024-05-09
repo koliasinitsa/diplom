@@ -69,7 +69,7 @@ export async function createItemService(itemData: any, photoPath: string) {
     try {
         const { type, numberOfSeats, typeEngine,
             fuelRate, costDay, cost3Day, costWeek, costMonth,
-            transmission, name, year, brand, typeCar } = itemData;
+            transmission, name, year, brand } = itemData;
 
         // Чтение байтов изображения из файла
         const photoData = await fs.promises.readFile(photoPath);
@@ -115,7 +115,6 @@ export async function createItemService(itemData: any, photoPath: string) {
                 photo: {
                     create: {
                         photo: photoData,
-                        photoUrl: `name${name}`,
                     },
                 }
             },
@@ -193,6 +192,7 @@ export const getCarByIdService = async (carId: number) => {
     }
 
     return {
+        carId: carId,
         typeCar: car.type.typeCar.name,
         numberOfSeats: car.type.numberOfSeats,
         typeEngine: car.type.typeEngine,

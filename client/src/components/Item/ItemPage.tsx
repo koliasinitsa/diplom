@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../interfaces/ItemCardProps';
 import Header from '../Header/Header';
 import { Button } from '@mui/material';
@@ -21,7 +21,7 @@ const ItemPage: React.FC = () => {
   const [modalShow, setModalShow] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState<string | null>(null);
-  const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
+  //const carDetails = { itemId, brand: carInfo?.brand, name: carInfo?.name, token };
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Состояние для отслеживания видимости модального окна удаления
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -31,6 +31,7 @@ const ItemPage: React.FC = () => {
       try {
         const response = await axios.get<Car>(`http://localhost:3000/ItemRoutes/getCarById/${itemId}`);
         setCarInfo(response.data);
+        console.log(carInfo)
         setLoading(false);
       } catch (error) {
         console.error('Error fetching car info:', error);
@@ -68,7 +69,7 @@ const ItemPage: React.FC = () => {
     if (isAuthenticated) {
       return <Button variant="contained" color="success" onClick={() => openModal()}>{t('Book')}</Button>;
     } else {
-      return <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#333',width: '100px' }}>{t('Signintobook')}</p>;
+      return <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#333', width: '100px' }}>{t('Signintobook')}</p>;
     }
   };
 
@@ -142,10 +143,14 @@ const ItemPage: React.FC = () => {
           <p style={{ fontSize: '20px', color: '#333' }}>Loading...</p>
         )}
       </div>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        carDetails={carDetails} />
+      {carInfo && (
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          token={token}
+          carinfo={carInfo}
+        />
+      )}
 
       <Modal show={showDeleteModal} onHide={() => closeModal()} style={{ marginTop: '100px' }} backdrop="static">
 

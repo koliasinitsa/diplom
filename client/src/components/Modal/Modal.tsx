@@ -5,14 +5,16 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import SuccessAlert from '../Alert/SuccessAlert';
 import ErrorAlert from '../Alert/ErrorAlert';
+import { Car } from '../../interfaces/ItemCardProps';
 
 interface ModalProps {
     show: boolean;
     onHide: () => void;
-    carDetails: { itemId: string; name: string, brand: string, token: any };
+    carinfo: Car;
+    token: any;
 }
 
-const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDetails }) => {
+const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo, token, }) => {
     const [formData, setFormData] = useState({
         paymentMethod: '',
         startDate: '',
@@ -20,8 +22,9 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
     });
     const [successMessage, setSuccessMessage] = useState('');
     const [error, setError] = useState('');
+    
 
-
+    console.log(carinfo)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -39,13 +42,14 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
             method: formData.paymentMethod,
             startDate: formData.startDate,
             endDate: formData.endDate,
-            itemId: parseInt(carDetails.itemId, 10),
-            userId: carDetails.token
+            itemId: carinfo.carId,
+            userId: token
         };
         try {
             setSuccessMessage('')
             setError('');
             // Отправляем POST запрос на сервер
+            console.log(requestData)
             const response = await axios.post('http://localhost:3000/OrderRoutes/createOrders', requestData);
 
             console.log('Order created successfully:', response.data);
@@ -74,7 +78,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carDeta
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Забронировать автомобиль {carDetails.brand} {carDetails.name}
+                    Забронировать автомобиль {carinfo.brand} {carinfo.name}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
