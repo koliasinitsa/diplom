@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -25,16 +25,20 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
     const [daysCount, setDaysCount] = useState<number>(0);
     const [rentalCost, setRentalCost] = useState<number>(0); 
 
-    const calculateDays = () => {
+    // useEffect(() => {
+    //     calculateRentalCost();
+    // }, [daysCount]);
+    
+    const calculateDays = (formData: any): number => {
         const startDate = new Date(formData.startDate);
         const endDate = new Date(formData.endDate);
 
         if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime()) && endDate >= startDate) {
             const differenceInTime = endDate.getTime() - startDate.getTime();
             const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-            setDaysCount(Math.floor(differenceInDays));
+            return Math.floor(differenceInDays);
         } else {
-            setDaysCount(0);
+            return 0;
         }
     };
 
@@ -48,7 +52,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
         }));
     };
 
-    const calculateRentalCost = (): number => {
+    const calculateRentalCost = (daysCount: number, carinfo: any): number => {
         let totalCost = 0;
 
         // Расчет общей стоимости в зависимости от количества дней
@@ -70,17 +74,20 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
             totalCost = carinfo.costDay * daysCount;
         }
 
-        setRentalCost(totalCost); 
-        return totalCost;
+        return totalCost; 
     };
 
     const handleCalculate = () => {
-        calculateDays();
-        calculateRentalCost();
+        
+        const daysCountResult = calculateDays(formData);
+        const rentalCostResult = calculateRentalCost(daysCountResult, carinfo);
+
+        setDaysCount(daysCountResult);
+        setRentalCost(rentalCostResult);
     };
 
     const handleSubmit = async () => {
-        if (!formData.paymentMethod || !formData.startDate || !formData.endDate) {
+        if (!formData.paymentMethod || !formData.startDate || !formData.endDate || !rentalCost) {
             setError('Пожалуйста, заполните все поля формы');
             return;
         }

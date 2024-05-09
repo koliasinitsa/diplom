@@ -31,7 +31,9 @@ const OrderItem: React.FC<Props> = ({ order, selected, onSelectOrder }) => {
       <TableCell>{order.userEmail}</TableCell>
       <TableCell>{formatDate(order.startDate)}</TableCell>
       <TableCell>{formatDate(order.endDate)}</TableCell>
+      <TableCell>{order.daysCount} days</TableCell>
       <TableCell>{order.paymentMethod}</TableCell>
+      <TableCell>{order.rentalCost}$</TableCell>
       <TableCell>{order.carBrand}</TableCell>
       <TableCell>{order.carModel}</TableCell>
     </TableRow>

@@ -82,7 +82,9 @@ const OrdersTable: React.FC = () => {
                             <TableCell style={{width: '150px'}}>{t('Email')}</TableCell>
                             <TableCell style={{width: '150px'}}>{t('Start Date')}</TableCell>
                             <TableCell style={{width: '150px'}}>{t('End Date')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('DaysCount')}</TableCell>
                             <TableCell style={{width: '150px'}}>{t('Payment Method')}</TableCell>
+                            <TableCell style={{width: '150px'}}>{t('OrderCount')}</TableCell>
                             <TableCell style={{width: '150px'}}>{t('Car Brand')}</TableCell>
                             <TableCell style={{width: '150px'}}>{t('Car Model')}</TableCell>
                         </TableRow>
