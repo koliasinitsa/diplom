@@ -71,7 +71,7 @@ const CreateItemForm = () => {
 
     return (
         <Container className="d-flex justify-content-center mt-5">
-            <Form  ref={formRef} onSubmit={handleSubmit} style={{ width: '400px' }}>
+            <Form ref={formRef} onSubmit={handleSubmit} style={{ width: '400px' }}>
                 <Form.Group controlId="images">
                     <Form.Label>Upload Image</Form.Label>
                     <Form.Control type="file" onChange={handleImageChange} />
@@ -95,18 +95,20 @@ const CreateItemForm = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="numberOfSeats">
-                    <Form.Label>Number of Seats</Form.Label>
+                    <Form.Label>Количество мест</Form.Label>
                     <Form.Select onChange={handleSelectChange} name="numberOfSeats">
                         <option value="">numberOfSeats</option>
                         <option value="2">2</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
                         <option value="7">7</option>
+                        <option value="9">9</option>
+                        <option value="12">12</option>
                     </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="typeEngine">
-                    <Form.Label>Engine Type</Form.Label>
+                    <Form.Label>Тип двигателя</Form.Label>
                     <Form.Select onChange={handleSelectChange} name="typeEngine">
                         <option value="">Engine Type</option>
                         <option value="Бензин">Бензин</option>
@@ -119,7 +121,7 @@ const CreateItemForm = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="fuelRate">
-                    <Form.Label>Fuel Rate</Form.Label>
+                    <Form.Label>Расход двигателя</Form.Label>
                     <Form.Control type="number" step="any" placeholder="Enter fuel rate" onChange={handleInputChange} name="fuelRate" />
                 </Form.Group>
 
@@ -156,7 +158,24 @@ const CreateItemForm = () => {
 
                 <Form.Group className="mb-3" controlId="brand">
                     <Form.Label>Brand</Form.Label>
-                    <Form.Control type="text" placeholder="Enter brand" onChange={handleInputChange} name="brand" />
+                    <Form.Select onChange={handleSelectChange} name="brand">
+                        <option value="">Select Brand</option>
+                        <option value="Audi">Audi</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Mercedes-Benz">Mercedes-Benz</option>
+                        <option value="Lexus">Lexus</option>
+                        <option value="Jaguar">Jaguar</option>
+                        <option value="Porsche">Porsche</option>
+                        <option value="Tesla">Tesla</option>
+                        <option value="Land Rover">Land Rover</option>
+                        <option value="Maserati">Maserati</option>
+                        <option value="Ferrari">Ferrari</option>
+                        <option value="Lamborghini">Lamborghini</option>
+                        <option value="Bentley">Bentley</option>
+                        <option value="Rolls-Royce">Rolls-Royce</option>
+                        <option value="Aston Martin">Aston Martin</option>
+                        <option value="McLaren">McLaren</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="name">
@@ -168,8 +187,8 @@ const CreateItemForm = () => {
                     <Form.Label>Year</Form.Label>
                     <Form.Control type="number" placeholder="Enter year" onChange={handleInputChange} name="year" />
                 </Form.Group>
-                {error && <ErrorAlert error={error}  />}
-                {successMessage && <SuccessAlert message={successMessage}  />}
+                {error && <ErrorAlert error={error} />}
+                {successMessage && <SuccessAlert message={successMessage} />}
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
