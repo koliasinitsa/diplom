@@ -106,21 +106,38 @@ const ItemPage: React.FC = () => {
                   imageUrl={`data:image/jpeg;base64,${arrayBufferToBase64(carInfo.photo.data)}`}
                 />
               </div>
-              <div className="d-flex mt-3">
-                <p className="mb-1 me-3" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost per Day: ${carInfo.costDay}</p>
-                <p className="mb-1 me-3" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost for 3 Days: ${carInfo.cost3Day}</p>
-                <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost per Week: ${carInfo.costWeek}</p>
-                <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>Cost per Month: ${carInfo.costMonth}</p>
+              <div className="d-grid mt-3">
+                <div className='d-flex mt-3'>
+                  <p className="mb-1 me-3" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}> {t('Cost per Day')}: ${carInfo.costDay}</p>
+                  <p className="mb-1 me-3" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>  {t('Cost for 3 Days')}: ${carInfo.cost3Day}</p>
+                  <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}> {t('Cost per Week')}: ${carInfo.costWeek}</p>
+                  <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333' }}>  {t('Cost per Month')}: ${carInfo.costMonth}</p>
+                </div>
+                <div style={{ marginLeft: 'auto', marginTop: "20px" }}>
+                  <p className="mb-1" style={{ fontSize: '16px', fontWeight: 'bold', color: '#333', paddingLeft: 0 }}>
+                    <p className="mb-1" style={{ lineHeight: '1.5' }}>
+                      {t('textPage.text1')}<br />
+                      {t('textPage.text2')}<br />
+                      {t('textPage.text3')}<br />
+                      {t('textPage.text4')}
+                    </p>
+                    <ol style={{ lineHeight: '1.7', marginLeft: "5px", }}>
+                      <li>{t('textPage.li1')}</li>
+                      <li>{t('textPage.li2')}</li>
+                      <li>{t('textPage.li3')}</li>
+                    </ol>
+                  </p>
+                </div>
               </div>
             </div>
             <div className="col-md-6">
               <h2 className="mb-3" style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{carInfo.brand} {carInfo.name}</h2>
-              <p><strong>Type:</strong> {carInfo.typeCar}</p>
-              <p><strong>Number of Seats:</strong> {carInfo.numberOfSeats}</p>
-              <p><strong>Engine Type:</strong> {carInfo.typeEngine}</p>
-              <p><strong>Fuel Rate:</strong> {carInfo.fuelRate}/100л</p>
-              <p><strong>Transmission:</strong> {carInfo.transmission}</p>
-              <p><strong>Year:</strong> {carInfo.year}</p>
+              <p><strong>  {t('Type')}</strong> {carInfo.typeCar}</p>
+              <p><strong>  {t('Number of Seats')}</strong> {carInfo.numberOfSeats}</p>
+              <p><strong>  {t('Engine Type')}</strong> {carInfo.typeEngine}</p>
+              <p><strong>  {t('Fuel Rate')}</strong> {carInfo.fuelRate}/100л</p>
+              <p><strong>  {t('Transmission')}</strong> {carInfo.transmission}</p>
+              <p><strong>  {t('Year')}</strong> {carInfo.year}</p>
               <div>
                 {renderButton()}
                 {role === 'admin' && (

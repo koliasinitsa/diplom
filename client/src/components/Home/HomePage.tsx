@@ -2,15 +2,16 @@
 import React from 'react';
 import Header from '../Header/Header';
 import ItemTable from '../Item/ItemTable';
+import './home.css'
 
 const HomePage: React.FC = () => {
   return (
-      <div className="App">
-        <Header />
-        <div className="content" style={{ marginTop: '100px' }}>
-          <ItemTable/>
-        </div>
+    <div className="App">
+      <Header />
+      <div className="content" >
+        <ItemTable />
       </div>
+    </div>
   );
 }
 

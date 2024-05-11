@@ -28,5 +28,24 @@
   "Book": "Reservation",
   "Spravka": "inquiry",
   "Signintobook": "Sign in to book",
-  "Are you sure you want to delete": "Are you sure you want to delete"
+  "Are you sure you want to delete": "Are you sure you want to delete",
+  "Type": "Type:",
+  "Number of Seats": "Number of Seats:",
+  "Engine Type": "Engine Type:",
+  "Fuel Rate": "Fuel Rate:",
+  "Transmission": "Transmission:",
+  "Year": "Year:",
+  "Cost per Day": "Cost per Day",
+  "Cost for 3 Days": "Cost for 3 Days",
+  "Cost per Week": "Cost per Week",
+  "Cost per Month": "Cost per Month",
+  "textPage": {
+    "text1": "We aim to make renting with us as profitable and easy for you as possible.",
+    "text2": "Certain rental terms have fixed rates.",
+    "text3": "If the purpose of your rental does not fit any tariff.",
+    "text4": "We offer a simple and flexible pricing system:",
+    "li1": "Short-term (3-7 days): 30% discount off the base daily rate.",
+    "li2": "More than a week (7-30 days): 50% discount off the base daily rate.",
+    "li3": "Long-term (more than 30 days): 85% discount off the base daily rate."
+  }
 }

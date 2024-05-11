@@ -3,9 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { ItemCardProps } from '../../interfaces/ItemCardProps';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
+    const { t } = useTranslation();
     const { id, name, transmission, type, costDay, photo, brand } = item;
 
     // Преобразование массива чисел (буфера) в строку Base64
@@ -29,13 +31,13 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
             <Card.Body>
                 <Card.Title>{brand} {name}</Card.Title>
                 <Card.Text style={{ marginBottom: '5px' }}>
-                    <strong>Transmission:</strong> {transmission}
+                    <strong>{t('Transmission')}</strong> {transmission}
                 </Card.Text>
                 <Card.Text style={{ marginBottom: '5px' }}>
-                    <strong>Type:</strong> {type}
+                    <strong>{t('Type')}</strong> {type}
                 </Card.Text>
                 <Card.Text style={{ marginBottom: '5px' }}>
-                    <strong>Cost per Day:</strong> {costDay}
+                    <strong>{t('Cost per Day')}:</strong> {costDay}
                 </Card.Text>
                 <Link to={`/ItemPage/${id}`}>
                     <Button variant="primary">перейти</Button>

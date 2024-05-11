@@ -8,7 +8,7 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, goToPreviousPage, goToNextPage }) => {
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center',  }}>
             <button
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
@@ -40,7 +40,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, goToPreviousPage, 
             >
                 {'<'}
             </button>
-            <span style={{ margin: '0 10px', fontSize: '24px', color: '#3f51b5' }}>{currentPage}</span>
+            <span style={{ margin: '0 10px', fontSize: '24px', color: '#000000' }}>{currentPage}</span>
             <button
                 onClick={goToNextPage}
                 style={{

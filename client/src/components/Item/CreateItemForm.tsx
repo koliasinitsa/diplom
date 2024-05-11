@@ -88,6 +88,7 @@ const CreateItemForm = () => {
                         <option value="лифтбек">лифтбек</option>
                         <option value="минивэн">минивэн</option>
                         <option value="седан">седан</option>
+                        <option value="спорт">спорт</option>
                         <option value="универсал">универсал</option>
                         <option value="хэтчбэк 3дв">хэтчбэк 3 дв</option>
                         <option value="хэтчбэк 5дв">хэтчбэк 5 дв</option>
@@ -175,6 +176,7 @@ const CreateItemForm = () => {
                         <option value="Rolls-Royce">Rolls-Royce</option>
                         <option value="Aston Martin">Aston Martin</option>
                         <option value="McLaren">McLaren</option>
+                        <option value="Cadillac">Cadillac</option>
                     </Form.Select>
                 </Form.Group>
 

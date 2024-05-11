@@ -65,14 +65,12 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
         } else if (daysCount === 7) {
             totalCost = carinfo.costWeek;
         } else if (daysCount > 7 && daysCount < 30) {
-            totalCost = carinfo.costDay * daysCount * 0.3;
+            totalCost = carinfo.costDay * daysCount * 0.5;
         } else if (daysCount === 30) {
             totalCost = carinfo.costMonth;
         }else if (daysCount > 30) {
             totalCost = carinfo.costDay * daysCount * 0.15;
-        } else {
-            totalCost = carinfo.costDay * daysCount;
-        }
+        } 
 
         return totalCost; 
     };

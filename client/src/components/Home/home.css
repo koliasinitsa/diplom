@@ -1,0 +1,5 @@
+.content {
+    padding-top: 75px;
+    /* color: #000000; */
+    background: linear-gradient(to bottom, #2d86fa, #2c23b1, #3c0347); /* Градиент от 1 к 2 */
+  }
