@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -58,6 +58,8 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ show, onHide, carinfo
         // Расчет общей стоимости в зависимости от количества дней
         if (daysCount === 1) {
             totalCost = carinfo.costDay;
+        } else if (daysCount > 1 && daysCount < 3) {
+            totalCost = carinfo.costDay * daysCount;
         } else if (daysCount === 3) {
             totalCost = carinfo.cost3Day;
         }else if (daysCount > 3 && daysCount < 7) {
