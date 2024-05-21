@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Button, Grid } from '@mui/material';
 
-const CarFilterComponent: React.FC = () => {
+interface CarFilterComponentProps {
+  onFiltersChange: (filters: { brand: string; bodyType: string; transmission: string }) => void;
+}
+
+const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange }) => {
   const [brand, setBrand] = useState('');
   const [transmission, setTransmission] = useState('');
   const [bodyType, setBodyType] = useState('');
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Selected filters:', { brand, transmission, bodyType });
-    // Здесь можно выполнить логику отправки выбранных фильтров на сервер или использовать их локально
+    onFiltersChange({ brand, transmission, bodyType });
   };
 
   return (

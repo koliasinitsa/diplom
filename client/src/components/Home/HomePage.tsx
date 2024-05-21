@@ -1,20 +1,26 @@
 //src/Home/HomePage.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../Header/Header';
 import ItemTable from '../Item/ItemTable';
 import './home.css'
 import CarFilterComponent from './CarFilterComponent';
 
 const HomePage: React.FC = () => {
+  const [filters, setFilters] = useState({ brand: '', bodyType: '', transmission: '' });
+
+  const handleFiltersChange = (newFilters: { brand: string; bodyType: string; transmission: string }) => {
+    setFilters(newFilters);
+  };
+
   return (
     <div className="App">
       <Header />
       <div className="content" >
         <div className="sidebar">
-          <CarFilterComponent />
+          <CarFilterComponent onFiltersChange={handleFiltersChange}/>
         </div>
         <div className="main-content">
-          <ItemTable />
+          <ItemTable filters={filters}/>
         </div>
       </div>
     </div>
