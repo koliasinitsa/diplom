@@ -1,5 +1,23 @@
+.App {
+  background: linear-gradient(to bottom, #2d86fa, #2c23b1, #3c0347);
+  display: flex; /* Используем Flexbox для выравнивания элементов */
+  min-height: 100vh; /* Высота всего экрана */
+}
+
 .content {
-    padding-top: 75px;
-    /* color: #000000; */
-    background: linear-gradient(to bottom, #2d86fa, #2c23b1, #3c0347); /* Градиент от 1 к 2 */
-  }
+  display: flex;
+  padding-top: 75px;
+  flex: 1; /* Занимаем все доступное пространство внутри .App */
+}
+
+.sidebar {
+  width: 20%; /* Ширина боковой панели (слева) */
+  padding: 40px;
+  background-color: #157bbe;
+  /* background: linear-gradient(to bottom, #2d86fa, #2c23b1, #3c0347); */
+}
+
+.main-content {
+  flex: 1; /* Основное содержимое (таблица машин) занимает оставшееся пространство */
+  padding: 20px;
+}
