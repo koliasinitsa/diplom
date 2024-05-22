@@ -1,5 +1,5 @@
 .App {
-  background: linear-gradient(to bottom, #2d86fa, #2c23b1, #3c0347);
+  background: #8bcbff;
   display: flex; /* Используем Flexbox для выравнивания элементов */
   min-height: 100vh; /* Высота всего экрана */
 }

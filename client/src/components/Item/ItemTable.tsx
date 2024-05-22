@@ -16,7 +16,6 @@ interface ItemTableProps {
 
 const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
     const [items, setItems] = useState<Item[]>([]);
-    const [filteredItems, setFilteredItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
 
