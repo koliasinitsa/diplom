@@ -3,13 +3,14 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getCarsService = async (brand: string, bodyType: string, transmission: string) => {
+export const getCarsService = async (brand: string, bodyType: string, transmission: string, typeEngine: string) => {
   try {
     const cars = await prisma.car.findMany({
       where: {
         ...(brand && { model: { brand: { name: { equals: brand, mode: 'insensitive' } } } }),
         ...(bodyType && { type: { typeCar: { name: { equals: bodyType, mode: 'insensitive' } } } }),
-        ...(transmission && { transmission: { transmission: { equals: transmission, mode: 'insensitive' } } })
+        ...(transmission && { transmission: { transmission: { equals: transmission, mode: 'insensitive' } } }),
+        ...(typeEngine && { type: { typeEngine: { equals: typeEngine, mode: 'insensitive' } } })
       },
       include: {
         model: { include: { brand: true } },
@@ -27,7 +28,7 @@ export const getCarsService = async (brand: string, bodyType: string, transmissi
       transmission: car.transmission.transmission,
       brand: car.model.brand.name,
       name: car.model.name,
-      photo: car.photo.photo
+      photo: car.photo.photo,
     }));
 
     return formattedCars;

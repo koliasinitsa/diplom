@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Button, Grid } from '@mui/material';
 
 interface CarFilterComponentProps {
-  onFiltersChange: (filters: { brand: string; bodyType: string; transmission: string }) => void;
+  onFiltersChange: (filters: { brand: string; bodyType: string; transmission: string, typeEngine: string }) => void;
 }
 
 const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange }) => {
   const [brand, setBrand] = useState('');
   const [transmission, setTransmission] = useState('');
   const [bodyType, setBodyType] = useState('');
+  const [typeEngine, setTypeEngine] = useState('');
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onFiltersChange({ brand, transmission, bodyType });
+    onFiltersChange({ brand, transmission, bodyType, typeEngine });
   };
 
   return (
@@ -90,6 +91,29 @@ const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange
               <MenuItem value="универсал">универсал</MenuItem>
               <MenuItem value="хэтчбэк 3дв">хэтчбэк 3 дв</MenuItem>
               <MenuItem value="хэтчбэк 5дв">хэтчбэк 5 дв</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <InputLabel id="engine-type-select-label">Type Engine</InputLabel>
+            <Select
+              labelId="engine-type-select-label"
+              id="engine-type-select"
+              value={typeEngine}
+              onChange={(e) => setTypeEngine(e.target.value as string)}
+              label="TypeEngine"
+            >
+              <MenuItem value="">type Engine</MenuItem>
+              <MenuItem value="Бензин">Бензин</MenuItem>
+              <MenuItem value="Бензин(метан)">Бензин(метан)</MenuItem>
+              <MenuItem value="Бензин(гибрид)">Бензин(гибрид)</MenuItem>
+              <MenuItem value="Бензин(гибрид)">Бензин(гибрид)</MenuItem>
+              <MenuItem value="Дизель">Дизель</MenuItem>
+              <MenuItem value="Дизель(гибрид)">Дизель(гибрид)</MenuItem>
+              <MenuItem value="Электро">Электро</MenuItem>
+
             </Select>
           </FormControl>
         </Grid>

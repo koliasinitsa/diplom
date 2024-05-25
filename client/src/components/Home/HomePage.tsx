@@ -6,9 +6,12 @@ import './home.css'
 import CarFilterComponent from './CarFilterComponent';
 
 const HomePage: React.FC = () => {
-  const [filters, setFilters] = useState({ brand: '', bodyType: '', transmission: '' });
+  const [filters, setFilters] = useState({ brand: '', bodyType: '', transmission: '', typeEngine: '' });
 
-  const handleFiltersChange = (newFilters: { brand: string; bodyType: string; transmission: string }) => {
+  const handleFiltersChange = (
+    newFilters:
+      { brand: string; bodyType: string; transmission: string, typeEngine: string }
+  ) => {
     setFilters(newFilters);
   };
 
@@ -17,10 +20,10 @@ const HomePage: React.FC = () => {
       <Header />
       <div className="content" >
         <div className="sidebar">
-          <CarFilterComponent onFiltersChange={handleFiltersChange}/>
+          <CarFilterComponent onFiltersChange={handleFiltersChange} />
         </div>
         <div className="main-content">
-          <ItemTable filters={filters}/>
+          <ItemTable filters={filters} />
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ interface ItemTableProps {
         brand: string;
         bodyType: string;
         transmission: string;
+        typeEngine: string;
     };
 }
 
@@ -28,7 +29,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
     }, [currentPage, isFiltered]);
 
     useEffect(() => {
-        if (filters.brand || filters.bodyType || filters.transmission) {
+        if (filters.brand || filters.bodyType || filters.transmission || filters.typeEngine) {
             setIsFiltered(true);
             fetchFilteredCars(filters);
         } else {
@@ -55,13 +56,15 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
         });
     };
 
-    const fetchFilteredCars = (filters: { brand: string; bodyType: string; transmission: string }) => {
+    const fetchFilteredCars = (filters: { brand: string; bodyType: string; transmission: string, typeEngine: string }) => {
         setLoading(true);
+        console.log(filters)
         axios.get(`http://localhost:3000/ItemRoutes/cars`, {
             params: {
                 brand: filters.brand,
                 bodyType: filters.bodyType,
                 transmission: filters.transmission,
+                typeEngine: filters.typeEngine,
             }
         })
         .then(response => {
