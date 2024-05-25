@@ -6,7 +6,22 @@ import ErrorAlert from '../Alert/ErrorAlert';
 import SuccessAlert from '../Alert/SuccessAlert';
 
 const CreateItemForm = () => {
-    const [formData, setFormData] = useState<CreateCar>('');
+    const [formData, setFormData] = useState<CreateCar>({
+        type: '',
+        typeCar: '',
+        numberOfSeats: 0,
+        typeEngine: '',
+        fuelRate: 0,
+        costDay: 0,
+        cost3Day: 0,
+        costWeek: 0,
+        costMonth: 0,
+        transmission: '',
+        brand: '',
+        name: '',
+        year: 0,
+        images: null // если images присутствует в интерфейсе
+    });
     const [successMessage, setSuccessMessage] = useState('');
     const [error, setError] = useState('');
     const formRef = useRef<HTMLFormElement>(null);
