@@ -21,8 +21,8 @@ const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange
   const [transmission, setTransmission] = useState('');
   const [bodyType, setBodyType] = useState('');
   const [typeEngine, setTypeEngine] = useState('');
-  const [minPrice, setMinPrice] = useState<number | string>('');
-  const [maxPrice, setMaxPrice] = useState<number | string>('');
+  const [minPrice, setMinPrice] = useState<number | string>(0);
+  const [maxPrice, setMaxPrice] = useState<number | string>(5000);
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

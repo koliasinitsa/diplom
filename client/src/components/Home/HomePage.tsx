@@ -6,7 +6,14 @@ import './home.css'
 import CarFilterComponent from './CarFilterComponent';
 
 const HomePage: React.FC = () => {
-  const [filters, setFilters] = useState({ brand: '', bodyType: '', transmission: '', typeEngine: '' });
+  const [filters, setFilters] = useState({
+    brand: '',
+    bodyType: '',
+    transmission: '',
+    typeEngine: '',
+    minPrice: 0, 
+    maxPrice: 5000, 
+  });
 
   const handleFiltersChange = (
     newFilters:
