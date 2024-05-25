@@ -3,14 +3,27 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getCarsService = async (brand: string, bodyType: string, transmission: string, typeEngine: string) => {
+export const getCarsService = async (
+  brand: string,
+  bodyType: string,
+  transmission: string,
+  typeEngine: string,
+  minPrice: number,
+  maxPrice: number,
+) => {
   try {
     const cars = await prisma.car.findMany({
       where: {
         ...(brand && { model: { brand: { name: { equals: brand, mode: 'insensitive' } } } }),
         ...(bodyType && { type: { typeCar: { name: { equals: bodyType, mode: 'insensitive' } } } }),
         ...(transmission && { transmission: { transmission: { equals: transmission, mode: 'insensitive' } } }),
-        ...(typeEngine && { type: { typeEngine: { equals: typeEngine, mode: 'insensitive' } } })
+        ...(typeEngine && { type: { typeEngine: { equals: typeEngine, mode: 'insensitive' } } }),
+        tarif: {
+          costDay: {
+            gte: minPrice,
+            lte: maxPrice,
+          },
+        },
       },
       include: {
         model: { include: { brand: true } },

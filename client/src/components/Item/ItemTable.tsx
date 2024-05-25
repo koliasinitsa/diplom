@@ -11,6 +11,8 @@ interface ItemTableProps {
         bodyType: string;
         transmission: string;
         typeEngine: string;
+        minPrice: number;
+        maxPrice: number;
     };
 }
 
@@ -29,7 +31,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
     }, [currentPage, isFiltered]);
 
     useEffect(() => {
-        if (filters.brand || filters.bodyType || filters.transmission || filters.typeEngine) {
+        if (filters.brand || filters.bodyType || filters.transmission || filters.typeEngine || filters.minPrice || filters.maxPrice) {
             setIsFiltered(true);
             fetchFilteredCars(filters);
         } else {
@@ -46,17 +48,25 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
                 pageSize: 6,
             }
         })
-        .then(response => {
-            setItems(response.data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            setLoading(false);
-        });
+            .then(response => {
+                setItems(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            });
     };
 
-    const fetchFilteredCars = (filters: { brand: string; bodyType: string; transmission: string, typeEngine: string }) => {
+    const fetchFilteredCars = (
+        filters: {
+            brand: string;
+            bodyType: string;
+            transmission: string,
+            typeEngine: string,
+            minPrice: number;
+            maxPrice: number;
+        }) => {
         setLoading(true);
         console.log(filters)
         axios.get(`http://localhost:3000/ItemRoutes/cars`, {
@@ -65,16 +75,18 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
                 bodyType: filters.bodyType,
                 transmission: filters.transmission,
                 typeEngine: filters.typeEngine,
+                minPrice: filters.minPrice,
+                maxPrice: filters.maxPrice
             }
         })
-        .then(response => {
-            setItems(response.data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Error fetching filtered data:', error);
-            setLoading(false);
-        });
+            .then(response => {
+                setItems(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching filtered data:', error);
+                setLoading(false);
+            });
     };
 
     const goToPreviousPage = () => {

@@ -1,19 +1,45 @@
 import React, { useState } from 'react';
-import { FormControl, InputLabel, Select, MenuItem, Button, Grid } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Button, Grid, TextField, } from '@mui/material';
 
 interface CarFilterComponentProps {
-  onFiltersChange: (filters: { brand: string; bodyType: string; transmission: string, typeEngine: string }) => void;
+  onFiltersChange: (
+    filters: {
+      brand: string;
+      bodyType: string;
+      transmission: string;
+      typeEngine: string;
+      minPrice: number;
+      maxPrice: number;
+    }
+  ) => void;
 }
+
+
 
 const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange }) => {
   const [brand, setBrand] = useState('');
   const [transmission, setTransmission] = useState('');
   const [bodyType, setBodyType] = useState('');
   const [typeEngine, setTypeEngine] = useState('');
+  const [minPrice, setMinPrice] = useState<number | string>('');
+  const [maxPrice, setMaxPrice] = useState<number | string>('');
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onFiltersChange({ brand, transmission, bodyType, typeEngine });
+    onFiltersChange({
+      brand,
+      transmission,
+      bodyType,
+      typeEngine,
+      minPrice: Number(minPrice),
+      maxPrice: Number(maxPrice),
+    });
+  };
+
+  const handlePriceChange = (event: Event, newValue: number | number[]) => {
+    const [min, max] = newValue as number[];
+    setMinPrice(min.toString());
+    setMaxPrice(max.toString());
   };
 
   return (
@@ -117,6 +143,40 @@ const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange
             </Select>
           </FormControl>
         </Grid>
+        {/* <Typography variant="h6" gutterBottom>
+            Cost per day
+          </Typography> */}
+
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            label="Min Price"
+            type="number"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            label="Max Price"
+            type="number"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+        </Grid>
+
+        {/* <Grid item xs={12}>
+            <Slider
+              value={priceRange}
+              onChange={handlePriceChange}
+              valueLabelDisplay="auto"
+              min={0}
+              max={5000}
+            />
+          </Grid> */}
+
 
         <Grid item xs={12}>
           <Button variant="contained" color="primary" fullWidth type="submit">

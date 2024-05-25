@@ -10,8 +10,14 @@ const HomePage: React.FC = () => {
 
   const handleFiltersChange = (
     newFilters:
-      { brand: string; bodyType: string; transmission: string, typeEngine: string }
-  ) => {
+      {
+        brand: string;
+        bodyType: string;
+        transmission: string,
+        typeEngine: string,
+        minPrice: number;
+        maxPrice: number;
+      }) => {
     setFilters(newFilters);
   };
 
