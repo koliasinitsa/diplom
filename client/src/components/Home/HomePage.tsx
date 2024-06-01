@@ -11,8 +11,8 @@ const HomePage: React.FC = () => {
     bodyType: '',
     transmission: '',
     typeEngine: '',
-    minPrice: 0, 
-    maxPrice: 5000, 
+    minPrice: '', 
+    maxPrice: '', 
   });
 
   const handleFiltersChange = (
@@ -20,10 +20,10 @@ const HomePage: React.FC = () => {
       {
         brand: string;
         bodyType: string;
-        transmission: string,
-        typeEngine: string,
-        minPrice: number;
-        maxPrice: number;
+        transmission: string;
+        typeEngine: string;
+        minPrice: number | string;
+        maxPrice: number| string;
       }) => {
     setFilters(newFilters);
   };

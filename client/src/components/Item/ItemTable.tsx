@@ -11,8 +11,8 @@ interface ItemTableProps {
         bodyType: string;
         transmission: string;
         typeEngine: string;
-        minPrice: number;
-        maxPrice: number;
+        minPrice: number | string;
+        maxPrice: number| string;
     };
 }
 
@@ -25,6 +25,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
     useEffect(() => {
         if (isFiltered) {
             fetchFilteredCars(filters);
+            console.log(filters)
         } else {
             fetchData(currentPage);
         }
