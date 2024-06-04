@@ -22,8 +22,8 @@ const HomePage: React.FC = () => {
         bodyType: string;
         transmission: string;
         typeEngine: string;
-        minPrice: number | string;
-        maxPrice: number| string;
+        minPrice:  string;
+        maxPrice:  string;
       }) => {
     setFilters(newFilters);
   };

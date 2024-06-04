@@ -11,8 +11,8 @@ interface ItemTableProps {
         bodyType: string;
         transmission: string;
         typeEngine: string;
-        minPrice: number | string;
-        maxPrice: number| string;
+        minPrice:  string;
+        maxPrice:  string;
     };
 }
 
@@ -65,8 +65,8 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
             bodyType: string;
             transmission: string,
             typeEngine: string,
-            minPrice: number;
-            maxPrice: number;
+            minPrice: string;
+            maxPrice: string;
         }) => {
         setLoading(true);
         console.log(filters)

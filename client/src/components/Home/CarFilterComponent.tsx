@@ -8,8 +8,8 @@ interface CarFilterComponentProps {
       bodyType: string;
       transmission: string;
       typeEngine: string;
-      minPrice: number;
-      maxPrice: number;
+      minPrice: string;
+      maxPrice: string;
     }
   ) => void;
 }
@@ -31,8 +31,8 @@ const CarFilterComponent: React.FC<CarFilterComponentProps> = ({ onFiltersChange
       transmission,
       bodyType,
       typeEngine,
-      minPrice: Number(minPrice),
-      maxPrice: Number(maxPrice),
+      minPrice: String(minPrice),
+      maxPrice: String(maxPrice),
     });
   };
 

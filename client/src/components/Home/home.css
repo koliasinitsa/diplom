@@ -1,5 +1,5 @@
 .App {
-  background: #8bcbff;
+  background: #dbd3c1;
   display: flex; /* Используем Flexbox для выравнивания элементов */
   min-height: 100vh; /* Высота всего экрана */
 }
@@ -13,7 +13,7 @@
 .sidebar {
   width: 20%; /* Ширина боковой панели (слева) */
   padding: 40px;
-  background-color: #4babeb;
+  background-color: #9ed3da;
   /* background: linear-gradient(to bottom, #2d86fa, #2c23b1, #3c0347); */
 }
 
