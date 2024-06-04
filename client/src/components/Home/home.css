@@ -6,7 +6,7 @@
 
 .content {
   display: flex;
-  padding-top: 75px;
+  padding-top: 65px;
   flex: 1; /* Занимаем все доступное пространство внутри .App */
 }
 

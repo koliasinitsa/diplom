@@ -21,11 +21,11 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [isFiltered, setIsFiltered] = useState(false);
+    const [pagination, setPagination] = useState(true);
 
     useEffect(() => {
         if (isFiltered) {
             fetchFilteredCars(filters);
-            console.log(filters)
         } else {
             fetchData(currentPage);
         }
@@ -34,6 +34,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
     useEffect(() => {
         if (filters.brand || filters.bodyType || filters.transmission || filters.typeEngine || filters.minPrice || filters.maxPrice) {
             setIsFiltered(true);
+            setPagination(false);
             fetchFilteredCars(filters);
         } else {
             setIsFiltered(false);
@@ -69,7 +70,6 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
             maxPrice: string;
         }) => {
         setLoading(true);
-        console.log(filters)
         axios.get(`http://localhost:3000/ItemRoutes/cars`, {
             params: {
                 brand: filters.brand,
@@ -104,11 +104,11 @@ const ItemTable: React.FC<ItemTableProps> = ({ filters }) => {
 
     return (
         <div>
-            <Pagination
+            {pagination && <Pagination
                 currentPage={currentPage}
                 goToPreviousPage={goToPreviousPage}
                 goToNextPage={goToNextPage}
-            />
+            />}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '10px', maxWidth: '960px', margin: '0 auto', padding: '10px -5px' }}>
                     {items.map((item) => (
