@@ -20,7 +20,6 @@ import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
 
-
 const Header: React.FC = () => {
     const { t } = useTranslation();
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -69,110 +68,101 @@ const Header: React.FC = () => {
         navigate('/AuthForm');
     };
 
-    return (
-        <AppBar position="fixed" >
-            <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', }}>
-                    <Link to="/" style={{
-                        marginLeft: '100px',
-                        marginRight: '200px', display: 'inline-block',
-                        textDecoration: 'none', color: 'inherit'
-                    }}>
-                        <HomeIcon />
-                    </Link>
-                    {/* Поисковая строка (слева) с ограниченной шириной */}
-                    {/* <div style={{ maxWidth: '300px' }}>
-                        <SearchPanel />
-                    </div> */}
-                </div>
-
-                {/* Иконка смены цвета и языковой выбор */}
-                <div>
-                    {/* <IconButton
-                        color="inherit"
-                        aria-label="dark mode"
-                    >
-                        <DarkModeIcon />
-                    </IconButton> */}
-                    {/* <Link to="/Spravka" style={{ textDecoration: 'none', color: 'inherit', marginRight: '200px' }}>
-                    <Button variant="contained" color="secondary">
-                                {t('Spravka')}
-                            </Button>
-                    </Link> */}
-                    {role === 'admin' && (
-                        <Link to="/OrderTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
-                            <Button variant="contained" color="success"
+    const openHelp = () => {
+        window.open('/spravka.chm');
+    };
+    
+return (
+    <AppBar position="fixed" >
+        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', }}>
+                <Link to="/" style={{
+                    marginLeft: '100px',
+                    marginRight: '200px', display: 'inline-block',
+                    textDecoration: 'none', color: 'inherit'
+                }}>
+                    <HomeIcon />
+                </Link>
+            </div>
+            <div>
+                <Button style={{ textDecoration: 'none', color: 'inherit', marginRight: '200px' }} 
+                variant="contained" color="secondary" onClick={openHelp}>
+                    {t('Spravka')}
+                </Button>
+               
+                {role === 'admin' && (
+                    <Link to="/OrderTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
+                        <Button variant="contained" color="success"
                             style={{ width: '100px', height: '40px' }}>
-                                {t('Orders')}
-                            </Button>
-                        </Link>
-                    )}
-                    {role === 'admin' && (
-                        <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
-                            <Button variant="contained" color="success"
+                            {t('Orders')}
+                        </Button>
+                    </Link>
+                )}
+                {role === 'admin' && (
+                    <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit', marginRight: '50px' }}>
+                        <Button variant="contained" color="success"
                             style={{ width: '140px', height: '40px' }}>
-                                {t('User')}
-                            </Button>
-                        </Link>
-                    )}
-                    {role === 'admin' && (
-                        <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
-                            <Button variant="contained" color="success"
+                            {t('User')}
+                        </Button>
+                    </Link>
+                )}
+                {role === 'admin' && (
+                    <Link to="/CreateItemForm" style={{ textDecoration: 'none', marginRight: '100px' }}>
+                        <Button variant="contained" color="success"
                             style={{ width: '220px', height: '40px' }}>
-                                {t('Create car')}
-                            </Button>
-                        </Link>
-                    )}
-                   
+                            {t('Create car')}
+                        </Button>
+                    </Link>
+                )}
+                <IconButton
+                    color="inherit"
+                    aria-label="language"
+                    aria-controls="language-menu"
+                    aria-haspopup="true"
+                >
+                    <LanguageSelector />
+                </IconButton>
+
+                {/* Проверка авторизации */}
+                {isAuthenticated ? (
                     <IconButton
                         color="inherit"
-                        aria-label="language"
-                        aria-controls="language-menu"
+                        aria-label="account of current user"
+                        aria-controls="user-menu"
                         aria-haspopup="true"
+                        onClick={handleUserMenuClick}
                     >
-                        <LanguageSelector />
+                        <AccountCircleIcon />
                     </IconButton>
+                ) : (
+                    <Button color="inherit" style={{ marginLeft: '10px' }} onClick={handleLoginClick}>
+                        Login
+                    </Button>
+                )}
 
-                    {/* Проверка авторизации */}
-                    {isAuthenticated ? (
-                        <IconButton
-                            color="inherit"
-                            aria-label="account of current user"
-                            aria-controls="user-menu"
-                            aria-haspopup="true"
-                            onClick={handleUserMenuClick}
-                        >
-                            <AccountCircleIcon />
-                        </IconButton>
-                    ) : (
-                        <Button color="inherit" style={{ marginLeft: '10px' }} onClick={handleLoginClick}>
-                            Login
-                        </Button>
-                    )}
-
-                    <Menu
-                        id="user-menu"
-                        anchorEl={anchorElUser}
-                        open={userMenuOpen}
-                        onClose={handleCloseUserMenu}
-                    >
-                        <Link to="/MyProfile" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
-                        </Link>
-                        <Link to="/MyOrder" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <MenuItem onClick={handleCloseUserMenu}>My Order</MenuItem>
-                        </Link>
-                        {/* {role === 'admin' && (
+                <Menu
+                    id="user-menu"
+                    anchorEl={anchorElUser}
+                    open={userMenuOpen}
+                    onClose={handleCloseUserMenu}
+                >
+                    <Link to="/MyProfile" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                    </Link>
+                    <Link to="/MyOrder" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem onClick={handleCloseUserMenu}>My Order</MenuItem>
+                    </Link>
+                    {/* {role === 'admin' && (
                             <Link to="/UsersTable" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <MenuItem>Users</MenuItem>
                             </Link>
                         )} */}
-                        <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-                    </Menu>
-                </div>
-            </Toolbar>
-        </AppBar>
-    );
+                    <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+                </Menu>
+            </div>
+        </Toolbar>
+    </AppBar>
+);
 }
 
 export default Header;
