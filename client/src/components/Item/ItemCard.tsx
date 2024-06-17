@@ -37,7 +37,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
                     <strong>{t('Type')}</strong> {type}
                 </Card.Text>
                 <Card.Text style={{ marginBottom: '5px' }}>
-                    <strong>{t('Cost per Day')}:</strong> {costDay}
+                    <strong>{t('Cost per Day')}:</strong> {costDay}$
                 </Card.Text>
                 <Link to={`/ItemPage/${id}`}>
                     <Button variant="primary">перейти</Button>
